@@ -1,0 +1,24 @@
+package daiku.app.app.service.input.goal;
+
+import daiku.domain.infra.model.param.GoalDaoParam;
+import lombok.Builder;
+import lombok.Value;
+
+import java.time.LocalDate;
+
+@Value
+@Builder
+public class GoalSearchServiceInput {
+    Long accountId;
+    LocalDate fromDate;
+    LocalDate toDate;
+
+    public GoalDaoParam toRepository() {
+        return GoalDaoParam.builder()
+                .accountId(accountId)
+                .olderThan(fromDate.getYear() < LocalDate.now().getYear() - 10)
+                .fromCreateDate(fromDate)
+                .toCreateDate(toDate)
+                .build();
+    }
+}

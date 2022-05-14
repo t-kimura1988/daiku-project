@@ -1,0 +1,15 @@
+spring:
+  batch:
+    jdbc:
+      initialize-schema: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/daiku
+    #    url: jdbc:mysql://localhost:8889/goen_db
+    username: kimuratakeshi
+    password: root
+    driver-class-name: org.postgresql.Driver
+  #  firebase:
+  #    credential:
+  #      path: ${GOOGLE_APPLICATION_CREDENTIALS}
+  jackson:
+    property-naming-strategy: SNAKE_CASE

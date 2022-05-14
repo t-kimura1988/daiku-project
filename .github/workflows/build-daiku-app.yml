@@ -1,0 +1,71 @@
+name: daiku-app build
+
+on:
+  push:
+    paths:
+      - ".github/workflows/**"
+      - "daiku-app/**"
+      - "daiku-domain/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        cache: 'gradle'
+
+    - name: AWS Production ENV
+      if: contains(toJSON(github.ref), 'master')
+      run: |
+        echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_PRD }} >> $GITHUB_ENV
+        echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PRD}} >> $GITHUB_ENV
+        echo TF_VAR_ENV=dev >> $GITHUB_ENV
+
+    - name: AWS Develop ENV
+      if: contains(toJSON(github.ref), 'develop') || contains(toJSON(github.ref), 'feature') || github.event_name == 'pull_request'
+      run: |
+        echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }} >> $GITHUB_ENV
+        echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV}} >> $GITHUB_ENV
+        echo TF_VAR_ENV=dev >> $GITHUB_ENV
+
+    - name: Configure AWS credentials
+      id: aws-credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-1
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle app package build
+      id: build-gradle
+      run: |
+        ./gradlew :daiku-app:build
+        ./gradlew :daiku-app:bootBuildImage --imageName=springio/${{ env.TF_VAR_ENV }}/daiku-app-docker:latest
+
+    - name: Publish Test Report
+      uses: mikepenz/action-junit-report@v3
+      if: always() # always run even if the previous step fails
+      with:
+        report_paths: '**/build/test-results/test/TEST-*.xml'
+
+    - name: Login to Amazon ECR
+      if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: ecr push
+      if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ env.TF_VAR_ENV }}/daiku-app
+        AWS_ACCOUNT_ID: ${{ steps.aws-credentials.outputs.aws-account-id }}
+      run: |
+        docker tag springio/${{ env.TF_VAR_ENV }}/daiku-app-docker:latest ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}
+        docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}

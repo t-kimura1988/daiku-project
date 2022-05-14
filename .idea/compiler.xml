@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.22/9c08ea24c6eb714e2d6170e8122c069a0ba9aacf/lombok-1.18.22.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.seasar.doma/doma-processor/2.51.0/2ccc8daa6921f1a97280ea438a37dbe375093466/doma-processor-2.51.0.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.seasar.doma/doma-core/2.51.0/c9286e55494984b1526a51def00c88702d60353e/doma-core-2.51.0.jar" />
+        </processorPath>
+        <module name="molti-daiku.daiku-domain.main" />
+        <module name="molti-daiku.daiku-app.main" />
+        <module name="molti-daiku.daiku-batch.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.22/9c08ea24c6eb714e2d6170e8122c069a0ba9aacf/lombok-1.18.22.jar" />
+        </processorPath>
+        <module name="molti-daiku.daiku-app.test" />
+        <module name="molti-daiku.daiku-domain.test" />
+        <module name="molti-daiku.daiku-batch.test" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="11">
+      <module name="daiku" target="14" />
+      <module name="daiku.main" target="14" />
+      <module name="daiku.test" target="14" />
+      <module name="multi_daiku" target="14" />
+      <module name="multi_daiku.daiku_library" target="14" />
+      <module name="multi_daiku.daiku_library.main" target="14" />
+      <module name="multi_daiku.daiku_library.test" target="14" />
+      <module name="multi_daiku.main" target="14" />
+      <module name="multi_daiku.test" target="14" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
