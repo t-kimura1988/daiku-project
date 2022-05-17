@@ -1,9 +1,6 @@
 package daiku.app.app.controller;
 
-import daiku.app.app.controller.input.processHistory.ProcessHistoryCreateParam;
-import daiku.app.app.controller.input.processHistory.ProcessHistoryDetailParam;
-import daiku.app.app.controller.input.processHistory.ProcessHistorySearchParam;
-import daiku.app.app.controller.input.processHistory.ProcessHistoryUpdateCommentParam;
+import daiku.app.app.controller.input.processHistory.*;
 import daiku.app.app.service.ProcessHistoryService;
 import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.infra.entity.GoenUserDetails;
@@ -50,5 +47,13 @@ public class ProcessHistoryController {
             @AuthenticationPrincipal GoenUserDetails user
             ) {
         processHistoryService.updateComment(param.toService(user.account().getId()));
+    }
+
+    @PostMapping("/update/status")
+    public void updateStatus(
+            @RequestBody ProcessHistoryUpdateStatusParam param,
+            @AuthenticationPrincipal GoenUserDetails user
+    ) throws GoenNotFoundException {
+        processHistoryService.updateStatus(param.toService(user.account().getId()));
     }
 }
