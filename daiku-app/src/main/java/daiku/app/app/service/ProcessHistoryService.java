@@ -1,9 +1,6 @@
 package daiku.app.app.service;
 
-import daiku.app.app.service.input.processHistory.ProcessHistoryCreateServiceInput;
-import daiku.app.app.service.input.processHistory.ProcessHistoryDetailServiceInput;
-import daiku.app.app.service.input.processHistory.ProcessHistorySearchServiceInput;
-import daiku.app.app.service.input.processHistory.ProcessHistoryUpdateCommentServiceInput;
+import daiku.app.app.service.input.processHistory.*;
 import daiku.app.app.service.output.processHistory.ProcessHistoryDetailServiceOutput;
 import daiku.app.app.service.output.processHistory.ProcessHistorySearchServiceOutput;
 import daiku.domain.exception.GoenNotFoundException;
@@ -84,5 +81,30 @@ public class ProcessHistoryService {
 
     public void updateComment(ProcessHistoryUpdateCommentServiceInput input) {
         processHistoryRepository.save(input.toProcessHistoryEntity());
+    }
+
+    public void updateStatus(ProcessHistoryUpdateStatusServiceInput input) throws GoenNotFoundException {
+        var process = processRepository.detail(input.toDetailParam()).orElseThrow(() -> {
+            Map<String, String> param = new LinkedHashMap<>();
+            param.put("Process.id: ", input.getProcessId().toString());
+            return new GoenNotFoundException("process detail info not found", param);
+        });
+
+        processHistoryRepository.save(
+                input.toProcessDetailParam(
+                        processHistoryRepository.selectForLatest(ProcessHistoryDaoParam.builder()
+                                .processId(input.getProcessId())
+                                .goalCreateDate(process.getGoalCreateDate())
+                                .accountId(input.getAccountId())
+                                .latestFlg(true)
+                                .build()).orElseThrow(
+                                () -> {
+                                    Map<String, String> param = new LinkedHashMap<>();
+                                    param.put("Process.id: ", input.getProcessId().toString());
+                                    return new GoenNotFoundException("process-history latest info not found", param);
+                                }
+                        )
+                )
+        );
     }
 }

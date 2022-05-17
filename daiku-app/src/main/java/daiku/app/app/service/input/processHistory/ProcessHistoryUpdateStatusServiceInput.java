@@ -8,14 +8,19 @@ import daiku.domain.infra.model.res.ProcessHistorySearchModel;
 import lombok.Builder;
 import lombok.Value;
 
-@Value
 @Builder
-public class ProcessHistoryCreateServiceInput {
+@Value
+public class ProcessHistoryUpdateStatusServiceInput {
     Long processId;
     Long accountId;
-    String comment;
     ProcessStatus processStatus;
     ProcessPriority priority;
+
+    public ProcessDaoParam toDetailParam() {
+        return ProcessDaoParam.builder()
+                .id(processId)
+                .accountId(accountId).build();
+    }
 
     public TProcessesHistory toProcessDetailParam(ProcessHistorySearchModel oldData) {
         TProcessesHistory entity = new TProcessesHistory();
@@ -26,15 +31,10 @@ public class ProcessHistoryCreateServiceInput {
         entity.setGoalCreateDate(oldData.getGoalCreateDate());
         entity.setProcessStatus(processStatus);
         entity.setPriority(priority);
-        entity.setComment(comment);
+        entity.setComment(oldData.getComment());
         entity.setProcessId(processId);
         entity.setAccountId(accountId);
         return entity;
     }
 
-    public ProcessDaoParam toDetailParam() {
-        return ProcessDaoParam.builder()
-                .id(processId)
-                .accountId(accountId).build();
-    }
 }
