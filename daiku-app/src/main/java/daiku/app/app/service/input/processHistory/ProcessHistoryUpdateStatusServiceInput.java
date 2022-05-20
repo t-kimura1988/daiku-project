@@ -31,7 +31,6 @@ public class ProcessHistoryUpdateStatusServiceInput {
         entity.setGoalCreateDate(oldData.getGoalCreateDate());
         entity.setProcessStatus(processStatus);
         entity.setPriority(priority);
-        entity.setComment(oldData.getComment());
         entity.setProcessId(processId);
         entity.setAccountId(accountId);
         return entity;

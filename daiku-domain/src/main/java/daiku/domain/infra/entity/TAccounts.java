@@ -43,4 +43,5 @@ public class TAccounts {
     private LocalDateTime updatedAt;
 
     private Long updatedBy;
+
 }
