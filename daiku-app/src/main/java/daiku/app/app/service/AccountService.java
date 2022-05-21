@@ -43,8 +43,16 @@ public class AccountService {
     }
 
     public TAccounts baseCreate(AccountCreateServiceInput input) {
-        accountRepository.save(input.toRepo());
-        return input.toRepo();
+        TAccounts accounts = new TAccounts();
+        accounts.setUid(input.getUid());
+        accounts.setEmail(input.getEmail());
+        accounts.setFamilyName(input.getFamilyName());
+        accounts.setGivenName(input.getGivenName());
+        accounts.setNickName(input.getNickName());
+        accounts.setDelFlg(DelFlg.NOT_DELETED);
+        accountRepository.save(accounts);
+        System.out.println(accounts);
+        return accounts;
     }
 
     public AccountUpdateServiceOutput update(AccountUpdateServiceInput input) {
