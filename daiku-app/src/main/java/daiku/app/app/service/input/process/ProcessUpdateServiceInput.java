@@ -49,9 +49,8 @@ public class ProcessUpdateServiceInput {
         entity.setPriority(processPriority);
         entity.setProcessId(processId);
         entity.setAccountId(accountId);
-        entity.setBeforeTitle(title.equals(oldProcess.getTitle()) ? null : title);
-        entity.setBeforeBody(body.equals(oldProcess.getBody()) ? null : body);
-        System.out.println(entity);
+        entity.setBeforeTitle(title.equals(oldProcess.getTitle()) ? null : oldProcess.getTitle());
+        entity.setBeforeBody(body.equals(oldProcess.getBody()) ? null : oldProcess.getBody());
         return entity;
     }
 }

@@ -12,6 +12,7 @@ select
     ph.before_process_end_date,
     ph.process_end_date,
     ph.comment,
+    ph.before_title,
     a.family_name as created_account_family_name,
     a.given_name as created_account_given_name,
     a.user_image as created_account_img
