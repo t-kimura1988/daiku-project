@@ -39,5 +39,5 @@ and
         select max(max_process_history.id)
         from t_processes_history max_process_history where max_process_history.process_id = ph.process_id)
 /*%end*/
-
+order by ph.id
 
