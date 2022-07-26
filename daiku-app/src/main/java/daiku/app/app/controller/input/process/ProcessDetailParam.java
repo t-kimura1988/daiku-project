@@ -3,6 +3,7 @@ package daiku.app.app.controller.input.process;
 import daiku.app.app.service.input.process.ProcessDetailServiceInput;
 import lombok.Builder;
 import lombok.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Builder
 public class ProcessDetailParam {
     Long processId;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate goalCreateDate;
 
     public ProcessDetailServiceInput toService(Long accountId) {

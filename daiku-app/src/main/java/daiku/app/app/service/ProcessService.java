@@ -33,7 +33,7 @@ public class ProcessService {
     @Autowired
     ProcessHistoryRepository processHistoryRepository;
 
-    public void create(ProcessCreateServiceInput input) throws GoenNotFoundException {
+    public TProcesses create(ProcessCreateServiceInput input) throws GoenNotFoundException {
         var goal = goalRepository.detail(
                 GoalDaoParam.builder()
                         .goalId(input.getGoalId())
@@ -48,9 +48,11 @@ public class ProcessService {
 
         processRepository.save(processes);
         processHistoryRepository.save(input.toProcessHistoryEntity(processes));
+
+        return processes;
     }
 
-    public void update(ProcessUpdateServiceInput input) throws GoenNotFoundException {
+    public TProcesses update(ProcessUpdateServiceInput input) throws GoenNotFoundException {
         goalRepository.detail(
                 GoalDaoParam.builder()
                         .goalId(input.getGoalId())
@@ -88,6 +90,9 @@ public class ProcessService {
         );
 
         processRepository.save(input.toProcessEntity());
+
+        return input.toProcessEntity();
+
     }
 
     public void updateProcessDate(ProcessDateUpdateServiceInput input) throws GoenNotFoundException {

@@ -43,22 +43,24 @@ public class GoalController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public void create(@RequestBody @Validated(CreateGroups.class) GoalCreateParam param, @AuthenticationPrincipal GoenUserDetails user) {
-        goalService.create(param.toCreateService(user.account().getId()));
+    public GoalSearchModel create(
+            @RequestBody @Validated(CreateGroups.class) GoalCreateParam param,
+            @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException{
+        return goalService.create(param.toCreateService(user.account().getId()));
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public void update(
+    public GoalSearchModel update(
             @RequestBody @Validated(UpdateGroups.class) GoalCreateParam param,
             @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException {
-        goalService.update(param.toUpdateService(user.account().getId()));
+        return goalService.update(param.toUpdateService(user.account().getId()));
     }
 
     @RequestMapping(value = "/create/archive", method = RequestMethod.POST)
-    public void archive(
+    public TGoalArchive archive(
             @RequestBody @Validated(CreateGroups.class) GoalArchiveCreateParam param,
             @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException, GoenIntegrityException {
-        goalService.archive(param.toArchiveService(user.account().getId()));
+        return goalService.archive(param.toArchiveService(user.account().getId()));
     }
 
     @RequestMapping(value = "/update/archive/display", method = RequestMethod.GET)
@@ -69,10 +71,10 @@ public class GoalController {
     }
 
     @RequestMapping(value = "/update/archive", method = RequestMethod.POST)
-    public void archiveUpdateDisp(
+    public TGoalArchive archiveUpdateDisp(
             @RequestBody @Validated(UpdateGroups.class) GoalArchiveCreateParam param,
             @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException, GoenIntegrityException {
-        goalService.archiveUpdate(param.toArchiveUpdateService());
+        return goalService.archiveUpdate(param.toArchiveUpdateService());
     }
 
     @RequestMapping(value = "/archive/search", method = RequestMethod.GET)

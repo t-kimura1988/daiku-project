@@ -34,26 +34,26 @@ public class ProcessHistoryController {
     }
 
     @PostMapping("/create")
-    public void create(
+    public ProcessHistorySearchModel create(
             @RequestBody ProcessHistoryCreateParam param,
             @AuthenticationPrincipal GoenUserDetails user
     ) throws GoenNotFoundException {
-        processHistoryService.create(param.toService(user.account().getId()));
+        return processHistoryService.create(param.toService(user.account().getId()));
     }
 
     @PostMapping("/update/comment")
-    public void updateComment(
+    public ProcessHistorySearchModel updateComment(
             @RequestBody ProcessHistoryUpdateCommentParam param,
             @AuthenticationPrincipal GoenUserDetails user
-            ) {
-        processHistoryService.updateComment(param.toService(user.account().getId()));
+            ) throws GoenNotFoundException{
+        return processHistoryService.updateComment(param.toService(user.account().getId()));
     }
 
     @PostMapping("/update/status")
-    public void updateStatus(
+    public ProcessHistorySearchModel updateStatus(
             @RequestBody ProcessHistoryUpdateStatusParam param,
             @AuthenticationPrincipal GoenUserDetails user
     ) throws GoenNotFoundException {
-        processHistoryService.updateStatus(param.toService(user.account().getId()));
+        return processHistoryService.updateStatus(param.toService(user.account().getId()));
     }
 }

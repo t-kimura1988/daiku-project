@@ -28,4 +28,5 @@ public class ProcessHistorySearchModel {
     private LocalDate processStartDate;
     private LocalDate beforeProcessEndDate;
     private LocalDate processEndDate;
+    private Long goalId;
 }
