@@ -49,9 +49,9 @@ public class ProcessController {
     }
 
     @RequestMapping(value = "/update/process-date", method = RequestMethod.POST)
-    public void updateProcessDate(@RequestBody @Validated ProcessDateUpdateParam param,
-                       @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException {
-        processService.updateProcessDate(param.toService(user.account().getId()));
+    public ProcessSearchModel updateProcessDate(@RequestBody @Validated ProcessDateUpdateParam param,
+                                               @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException {
+        return processService.updateProcessDate(param.toService(user.account().getId()));
     }
 
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
