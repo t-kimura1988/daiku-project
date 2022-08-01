@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,20 +44,26 @@ public class FirebaseClient {
     private static ObjectMapper mapper = new ObjectMapper();
 
 
-    @PostConstruct
     public synchronized void init() {
         if(app != null) {
             return;
         }
 
         try {
+            System.out.println("RRRRRRRRR1");
             FileWriter fw = new FileWriter(FIREBASE_CREDENTIALS_PATH);
+            System.out.println("RRRRRRRRR2");
             try (PrintWriter pw = new PrintWriter(new BufferedWriter(fw))) {
+                System.out.println("RRRRRRRRR3");
                 String str = mapper.writeValueAsString(getCredentials());
+                System.out.println("RRRRRRRRR4");
                 pw.println(str);
             }
+
+            System.out.println("RRRRRRRRR5");
             FileInputStream serviceAccount = new FileInputStream(FIREBASE_CREDENTIALS_PATH);
 
+            System.out.println("RRRRRRRRR6");
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
@@ -82,6 +87,7 @@ public class FirebaseClient {
         credentials.put("token_uri", "https://oauth2.googleapis.com/token");
         credentials.put("auth_provider_x509_cert_url", "https://www.googleapis.com/oauth2/v1/certs");
         credentials.put("client_x509_cert_url", clientX509CertUrl);
+        System.out.println(credentials);
         return credentials;
 
     }
@@ -89,6 +95,7 @@ public class FirebaseClient {
     @Bean
     @Scope("prototype")
     public FirebaseAuth auth() {
+        init();
         return FirebaseAuth.getInstance();
     }
 }
