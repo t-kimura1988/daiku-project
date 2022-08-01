@@ -28,13 +28,6 @@ jobs:
         echo AWS_ECS_SERVICE=${{ secrets.AWS_ECS_SERVICE_PRD }} >> $GITHUB_ENV
         echo AWS_ECS_CLUSTER=${{ secrets.AWS_ECS_CLUSTER_PRD }} >> $GITHUB_ENV
         echo AWS_ECS_CONTAINER_NAME=${{ secrets.AWS_ECS_CONTAINER_NAME_PRD }} >> $GITHUB_ENV
-        echo FIREBASE_TYPE=${{ secrets.FIREBASE_TYPE_PRD }} >> $GITHUB_ENV
-        echo FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID_PRD }} >> $GITHUB_ENV
-        echo FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID_PRD }} >> $GITHUB_ENV
-        echo FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY_PRD }} >> $GITHUB_ENV
-        echo FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL_PRD }} >> $GITHUB_ENV
-        echo FIREBASE_CLIENT_ID=${{ secrets.FIREBASE_CLIENT_ID_PRD }} >> $GITHUB_ENV
-        echo FIREBASE_CLIENT_X509_CER_URL=${{ secrets.FIREBASE_CLIENT_X509_CER_URL_PRD }} >> $GITHUB_ENV
 
     - name: AWS Develop ENV
       if: contains(toJSON(github.ref), 'develop') || contains(toJSON(github.ref), 'feature') || github.event_name == 'pull_request'
@@ -46,13 +39,6 @@ jobs:
         echo AWS_ECS_SERVICE=${{ secrets.AWS_ECS_SERVICE_DEV }} >> $GITHUB_ENV
         echo AWS_ECS_CLUSTER=${{ secrets.AWS_ECS_CLUSTER_DEV }} >> $GITHUB_ENV
         echo AWS_ECS_CONTAINER_NAME=${{ secrets.AWS_ECS_CONTAINER_NAME_DEV }} >> $GITHUB_ENV
-        echo FIREBASE_TYPE=${{ secrets.FIREBASE_TYPE_DEV }} >> $GITHUB_ENV
-        echo FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID_DEV }} >> $GITHUB_ENV
-        echo FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID_DEV }} >> $GITHUB_ENV
-        echo FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY_DEV }} >> $GITHUB_ENV
-        echo FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL_DEV }} >> $GITHUB_ENV
-        echo FIREBASE_CLIENT_ID=${{ secrets.FIREBASE_CLIENT_ID_DEV }} >> $GITHUB_ENV
-        echo FIREBASE_CLIENT_X509_CER_URL=${{ secrets.FIREBASE_CLIENT_X509_CER_URL_DEV }} >> $GITHUB_ENV
 
     - name: Configure AWS credentials
       id: aws-credentials
