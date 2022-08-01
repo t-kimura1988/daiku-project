@@ -1,10 +1,13 @@
 package daiku.app.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import daiku.app.app.service.GoenUserDetailsService;
+import daiku.domain.infra.entity.ErrorResponse;
 import daiku.domain.infra.entity.GoenUserDetails;
 import daiku.domain.infra.entity.TAccounts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
@@ -14,7 +17,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,8 +27,15 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class OAuth2Filter extends OncePerRequestFilter {
+
+    private final ObjectMapper objectMapper;
+
     @Autowired
     private GoenUserDetailsService userDetailsService;
+
+    public OAuth2Filter(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     protected void doFilterInternal(
@@ -39,7 +50,12 @@ public class OAuth2Filter extends OncePerRequestFilter {
             String uid = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("user_id");
             String email = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("email");
             if(!request.getRequestURI().equals("/api/account/create")) {
+                String accountType = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("account_type");
                 user = userDetailsService.loadUserByUsername(uid);
+                if(accountType == null) {
+                    handleAccountTypeError(response);
+                    return;
+                }
             } else {
                 var account = new TAccounts();
                 account.setUid(uid);
@@ -53,6 +69,19 @@ public class OAuth2Filter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+
+    }
+
+    private void handleAccountTypeError(HttpServletResponse response) throws IOException {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCd("E0003")
+                .code(HttpStatus.UNAUTHORIZED.value())
+                .message("アカウント種別が不正です").build();
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
 
     }
 }

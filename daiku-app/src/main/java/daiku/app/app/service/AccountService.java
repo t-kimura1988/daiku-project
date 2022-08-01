@@ -12,6 +12,7 @@ import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.infra.entity.TAccounts;
 import daiku.domain.infra.enums.DelFlg;
 import daiku.domain.infra.repository.AccountRepository;
+import daiku.domain.infra.repository.FirebaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ import java.util.Map;
 public class AccountService {
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    FirebaseRepository firebaseRepository;
 
     public TAccounts showService(String uid) throws GoenNotFoundException, GoenIntegrityException {
         var account = accountRepository.selectByUid(uid)
@@ -42,7 +46,7 @@ public class AccountService {
         return account;
     }
 
-    public TAccounts baseCreate(AccountCreateServiceInput input) {
+    public TAccounts baseCreate(AccountCreateServiceInput input) throws FirebaseAuthException {
         TAccounts accounts = new TAccounts();
         accounts.setUid(input.getUid());
         accounts.setEmail(input.getEmail());
@@ -51,7 +55,8 @@ public class AccountService {
         accounts.setNickName(input.getNickName());
         accounts.setDelFlg(DelFlg.NOT_DELETED);
         accountRepository.save(accounts);
-        System.out.println(accounts);
+        firebaseRepository.accountClaims(input.getUid());
+
         return accounts;
     }
 

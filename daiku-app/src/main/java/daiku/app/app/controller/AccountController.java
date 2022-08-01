@@ -33,7 +33,7 @@ public class AccountController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public TAccounts create(
             @RequestBody AccountCreateParam param,
-            @AuthenticationPrincipal GoenUserDetails userDetails) {
+            @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException {
         return accountService.baseCreate(param.toService(userDetails.account()));
     }
 

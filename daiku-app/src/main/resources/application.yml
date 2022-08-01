@@ -33,7 +33,6 @@ spring:
 
 firebase:
   credentials:
-    firestoreUrl: ${FIRESTORE_URL}
     type: ${FIREBASE_TYPE}
     projectId: ${FIREBASE_PROJECT_ID}
     privateKeyId: ${FIREBASE_PRIVATE_KEY_ID}
