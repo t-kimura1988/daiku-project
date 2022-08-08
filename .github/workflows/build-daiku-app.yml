@@ -23,7 +23,7 @@ jobs:
       run: |
         echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_PRD }} >> $GITHUB_ENV
         echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PRD}} >> $GITHUB_ENV
-        echo TF_VAR_ENV=dev >> $GITHUB_ENV
+        echo TF_VAR_ENV=prd >> $GITHUB_ENV
         echo AWS_ECS_TASK_DEFINITION_BASE64=${{ secrets.AWS_ECS_TASK_DEFINITION_BASE64_PRD }} >> $GITHUB_ENV
         echo AWS_ECS_SERVICE=${{ secrets.AWS_ECS_SERVICE_PRD }} >> $GITHUB_ENV
         echo AWS_ECS_CLUSTER=${{ secrets.AWS_ECS_CLUSTER_PRD }} >> $GITHUB_ENV
