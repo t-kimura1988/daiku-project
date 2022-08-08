@@ -57,7 +57,6 @@ public class FirebaseClient {
                 System.out.println("RRRRRRRRR3");
                 String str = mapper.writeValueAsString(getCredentials());
                 System.out.println("RRRRRRRRR4");
-                pw.println(str);
             }
 
             System.out.println("RRRRRRRRR5");
@@ -67,10 +66,12 @@ public class FirebaseClient {
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
+            System.out.println("RRRRRRRRR7");
 
             app = FirebaseApp.initializeApp(options);
 
         } catch (IOException e) {
+            System.out.println("RRRRRRRRR8");
             throw new RuntimeException(e);
         }
     }
