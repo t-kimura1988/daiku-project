@@ -50,28 +50,20 @@ public class FirebaseClient {
         }
 
         try {
-            System.out.println("RRRRRRRRR1");
             FileWriter fw = new FileWriter(FIREBASE_CREDENTIALS_PATH);
-            System.out.println("RRRRRRRRR2");
             try (PrintWriter pw = new PrintWriter(new BufferedWriter(fw))) {
-                System.out.println("RRRRRRRRR3");
                 String str = mapper.writeValueAsString(getCredentials());
-                System.out.println("RRRRRRRRR4");
             }
 
-            System.out.println("RRRRRRRRR5");
             FileInputStream serviceAccount = new FileInputStream(FIREBASE_CREDENTIALS_PATH);
 
-            System.out.println("RRRRRRRRR6");
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
-            System.out.println("RRRRRRRRR7");
 
             app = FirebaseApp.initializeApp(options);
 
         } catch (IOException e) {
-            System.out.println("RRRRRRRRR8");
             throw new RuntimeException(e);
         }
     }
