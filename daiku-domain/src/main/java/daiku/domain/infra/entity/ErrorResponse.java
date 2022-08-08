@@ -1,9 +1,11 @@
 package daiku.domain.infra.entity;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Value;
-import org.springframework.http.ResponseEntity;
 
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Value
 @Builder
 public class ErrorResponse {

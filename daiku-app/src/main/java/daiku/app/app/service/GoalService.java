@@ -4,9 +4,10 @@ import daiku.app.app.service.input.goal.*;
 import daiku.app.app.service.output.goal.*;
 import daiku.domain.exception.GoenIntegrityException;
 import daiku.domain.exception.GoenNotFoundException;
+import daiku.domain.infra.entity.TGoalArchive;
+import daiku.domain.infra.entity.TGoals;
 import daiku.domain.infra.enums.PublishLevel;
 import daiku.domain.infra.enums.UpdatingFlg;
-import daiku.domain.infra.model.param.GoalArchiveDaoParam;
 import daiku.domain.infra.model.param.GoalDaoParam;
 import daiku.domain.infra.model.param.ProcessDaoParam;
 import daiku.domain.infra.model.res.GoalSearchModel;
@@ -18,7 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @Service
@@ -94,11 +98,23 @@ public class GoalService {
                 .build();
     }
 
-    public void create(GoalCreateServiceInput input) {
-        goalRepository.save(input.toEntity());
+    public GoalSearchModel create(GoalCreateServiceInput input) throws GoenNotFoundException{
+        TGoals goals = input.toEntity();
+        goalRepository.save(goals);
+
+        return goalRepository.detail(GoalDaoParam.builder()
+                .goalId(goals.getId())
+                .accountId(input.getAccountId())
+                .createDate(goals.getCreateDate()).build()).orElseThrow(
+                () -> {
+                    Map<String, String> param = new LinkedHashMap<>();
+                    param.put("Goal.id: ", goals.getId().toString());
+                    return new GoenNotFoundException("goal detail info no found", param);
+                }
+        );
     }
 
-    public void update(GoalUpdateServiceInput input) throws GoenNotFoundException {
+    public GoalSearchModel update(GoalUpdateServiceInput input) throws GoenNotFoundException {
         goalRepository.detail(GoalDaoParam.builder()
                 .goalId(input.getGoalId())
                 .createDate(input.getCreateDate())
@@ -110,6 +126,17 @@ public class GoalService {
                         }
                 );
         goalRepository.save(input.toEntity());
+
+        return goalRepository.detail(GoalDaoParam.builder()
+                .goalId(input.getGoalId())
+                .accountId(input.getAccountId())
+                .createDate(input.getCreateDate()).build()).orElseThrow(
+                () -> {
+                    Map<String, String> param = new LinkedHashMap<>();
+                    param.put("Goal.id: ", input.getGoalId().toString());
+                    return new GoenNotFoundException("goal detail info no found", param);
+                }
+        );
     }
 
     public GoalDetailServiceOutput detail(GoalDetailServiceInput input) {
@@ -119,7 +146,7 @@ public class GoalService {
                 .build();
     }
 
-    public void archive(GoalArchiveServiceInput input) throws GoenNotFoundException, GoenIntegrityException {
+    public TGoalArchive archive(GoalArchiveServiceInput input) throws GoenNotFoundException, GoenIntegrityException {
         var goal = goalRepository.detail(
                         GoalDaoParam.builder()
                                 .goalId(input.getGoalId())
@@ -130,17 +157,22 @@ public class GoalService {
                     param.put("Goal.id", input.getGoalId().toString());
                     return new GoenNotFoundException("goal info not found exception", param, "");
                 });
-
+        AtomicReference<TGoalArchive> archive = new AtomicReference<>(new TGoalArchive());
+        archive.set(input.toEntity());
         goalArchiveRepository.selectByGoalId(goal.getId()).ifPresentOrElse(
                 goalArchive -> {
                     goalArchive.setUpdatingFlg(UpdatingFlg.ARCHIVING);
                     goalArchiveRepository.save(goalArchive);
+                    archive.set(goalArchive);
                 },
-                () -> goalArchiveRepository.save(input.toEntity()));
+                () -> goalArchiveRepository.save(archive.get()));
+
+
+        return archive.get();
 
     }
 
-    public void archiveUpdate(GoalArchiveUpdateServiceInput input) throws GoenNotFoundException {
+    public TGoalArchive archiveUpdate(GoalArchiveUpdateServiceInput input) throws GoenNotFoundException {
         var archive = goalArchiveRepository.selectById(input.toArchiveRepositoryParam())
                 .orElseThrow(() -> {
                     Map<String, String> param = new LinkedHashMap<>();
@@ -149,6 +181,8 @@ public class GoalService {
                 });
 
         goalArchiveRepository.save(input.toUpdateEntity(archive));
+
+        return archive;
 
     }
 

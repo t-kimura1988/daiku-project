@@ -4,7 +4,6 @@ import lombok.Data;
 import org.seasar.doma.Entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity
@@ -20,7 +19,7 @@ public class GoalFavoriteSearchModel {
     private String goalCreatedAccountImg;
     private String title;
     private String purpose;
-    private Date dueDate;
+    private LocalDate dueDate;
     private String favoriteAddAccountFamilyName;
     private String favoriteAddAccountGivenName;
     private String favoriteAddAccountNickName;

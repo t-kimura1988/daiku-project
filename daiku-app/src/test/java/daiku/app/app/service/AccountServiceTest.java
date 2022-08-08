@@ -6,6 +6,7 @@ import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.infra.entity.TAccounts;
 import daiku.domain.infra.enums.DelFlg;
 import daiku.domain.infra.repository.AccountRepository;
+import daiku.domain.utils.FirebaseClient;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import java.util.Optional;
 
@@ -25,6 +27,7 @@ import static org.mockito.Mockito.doReturn;
 @Slf4j
 @SpringBootTest(classes = DaikuApplication.class)
 @AutoConfigureMockMvc
+@SpringJUnitWebConfig
 public class AccountServiceTest {
 
     @Autowired
@@ -34,10 +37,14 @@ public class AccountServiceTest {
     @SpyBean
     private AccountRepository accountRepository;
 
+    @SpyBean
+    private FirebaseClient firebaseClient;
+
     @Test
     @DisplayName("selectByUidでデータが取得できなかった場合")
     void test1() {
         try {
+
             doReturn(Optional.empty()).when(accountRepository).selectByUid(any());
             accountService.showService("test");
         } catch(GoenNotFoundException e) {

@@ -12,7 +12,6 @@ public class ProcessHistorySearchServiceOutput {
     List<ProcessHistorySearchModel> processHistorySearchModelList;
 
     public List<ProcessHistorySearchModel> toResponse() {
-        System.out.println(processHistorySearchModelList);
         return processHistorySearchModelList;
     }
 }

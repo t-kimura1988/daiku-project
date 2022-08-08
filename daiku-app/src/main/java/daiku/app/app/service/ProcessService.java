@@ -8,6 +8,7 @@ import daiku.domain.infra.entity.TProcesses;
 import daiku.domain.infra.model.param.GoalDaoParam;
 import daiku.domain.infra.model.param.ProcessDaoParam;
 import daiku.domain.infra.model.param.ProcessHistoryDaoParam;
+import daiku.domain.infra.model.res.ProcessSearchModel;
 import daiku.domain.infra.repository.GoalRepository;
 import daiku.domain.infra.repository.ProcessHistoryRepository;
 import daiku.domain.infra.repository.ProcessRepository;
@@ -33,7 +34,7 @@ public class ProcessService {
     @Autowired
     ProcessHistoryRepository processHistoryRepository;
 
-    public void create(ProcessCreateServiceInput input) throws GoenNotFoundException {
+    public TProcesses create(ProcessCreateServiceInput input) throws GoenNotFoundException {
         var goal = goalRepository.detail(
                 GoalDaoParam.builder()
                         .goalId(input.getGoalId())
@@ -48,9 +49,11 @@ public class ProcessService {
 
         processRepository.save(processes);
         processHistoryRepository.save(input.toProcessHistoryEntity(processes));
+
+        return processes;
     }
 
-    public void update(ProcessUpdateServiceInput input) throws GoenNotFoundException {
+    public TProcesses update(ProcessUpdateServiceInput input) throws GoenNotFoundException {
         goalRepository.detail(
                 GoalDaoParam.builder()
                         .goalId(input.getGoalId())
@@ -88,9 +91,12 @@ public class ProcessService {
         );
 
         processRepository.save(input.toProcessEntity());
+
+        return input.toProcessEntity();
+
     }
 
-    public void updateProcessDate(ProcessDateUpdateServiceInput input) throws GoenNotFoundException {
+    public ProcessSearchModel updateProcessDate(ProcessDateUpdateServiceInput input) throws GoenNotFoundException {
         goalRepository.detail(
                 GoalDaoParam.builder()
                         .goalId(input.getGoalId())
@@ -102,30 +108,34 @@ public class ProcessService {
             return new GoenNotFoundException("goal info not found exception", param);
         });
 
-        processHistoryRepository.save(
-                input.toProcessUpdateHistory(
-                        processHistoryRepository.selectForLatest(ProcessHistoryDaoParam.builder()
-                                .processId(input.getProcessId())
-                                .goalCreateDate(input.getGoalCreateDate())
-                                .accountId(input.getAccountId())
-                                .latestFlg(true)
-                                .build()).orElseThrow(
-                                () -> {
-                                    Map<String, String> param = new LinkedHashMap<>();
-                                    param.put("Process.id: ", input.getProcessId().toString());
-                                    return new GoenNotFoundException("process-history latest info not found", param);
-                                }
-                        ),
-                        processRepository.detail(ProcessDaoParam.builder()
-                                .id(input.getProcessId())
-                                .createDate(input.getGoalCreateDate()).build()).orElseThrow(
-                                () -> {
-                                    Map<String, String> param = new LinkedHashMap<>();
-                                    param.put("Process.id: ", input.getProcessId().toString());
-                                    return new GoenNotFoundException("process-history latest info not found", param);
-                                })
-                )
+        var processDetail = processRepository.detail(ProcessDaoParam.builder()
+                        .id(input.getProcessId())
+                        .createDate(input.getGoalCreateDate()).build()).orElseThrow(
+                        () -> {
+                            Map<String, String> param = new LinkedHashMap<>();
+                            param.put("Process.id: ", input.getProcessId().toString());
+                            return new GoenNotFoundException("process-history latest info not found", param);
+                        });
+
+        var processHistory = processHistoryRepository.selectForLatest(ProcessHistoryDaoParam.builder()
+                .processId(input.getProcessId())
+                .goalCreateDate(input.getGoalCreateDate())
+                .accountId(input.getAccountId())
+                .latestFlg(true)
+                .build()).orElseThrow(
+                () -> {
+                    Map<String, String> param = new LinkedHashMap<>();
+                    param.put("Process.id: ", input.getProcessId().toString());
+                    return new GoenNotFoundException("process-history latest info not found", param);
+                }
         );
+
+        var updateEntity = input.toProcessUpdateHistory(processHistory, processDetail);
+
+        processHistoryRepository.save(updateEntity);
+
+        return processDetail;
+
     }
 
     public ProcessSearchServiceOutput search(ProcessSearchServiceInput input) throws GoenNotFoundException {

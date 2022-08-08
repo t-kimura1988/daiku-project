@@ -24,6 +24,10 @@ jobs:
         echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_PRD }} >> $GITHUB_ENV
         echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_PRD}} >> $GITHUB_ENV
         echo TF_VAR_ENV=dev >> $GITHUB_ENV
+        echo AWS_ECS_TASK_DEFINITION_BASE64=${{ secrets.AWS_ECS_TASK_DEFINITION_BASE64_PRD }} >> $GITHUB_ENV
+        echo AWS_ECS_SERVICE=${{ secrets.AWS_ECS_SERVICE_PRD }} >> $GITHUB_ENV
+        echo AWS_ECS_CLUSTER=${{ secrets.AWS_ECS_CLUSTER_PRD }} >> $GITHUB_ENV
+        echo AWS_ECS_CONTAINER_NAME=${{ secrets.AWS_ECS_CONTAINER_NAME_PRD }} >> $GITHUB_ENV
 
     - name: AWS Develop ENV
       if: contains(toJSON(github.ref), 'develop') || contains(toJSON(github.ref), 'feature') || github.event_name == 'pull_request'
@@ -31,6 +35,10 @@ jobs:
         echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID_DEV }} >> $GITHUB_ENV
         echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY_DEV}} >> $GITHUB_ENV
         echo TF_VAR_ENV=dev >> $GITHUB_ENV
+        echo AWS_ECS_TASK_DEFINITION_BASE64=${{ secrets.AWS_ECS_TASK_DEFINITION_BASE64_DEV }} >> $GITHUB_ENV
+        echo AWS_ECS_SERVICE=${{ secrets.AWS_ECS_SERVICE_DEV }} >> $GITHUB_ENV
+        echo AWS_ECS_CLUSTER=${{ secrets.AWS_ECS_CLUSTER_DEV }} >> $GITHUB_ENV
+        echo AWS_ECS_CONTAINER_NAME=${{ secrets.AWS_ECS_CONTAINER_NAME_DEV }} >> $GITHUB_ENV
 
     - name: Configure AWS credentials
       id: aws-credentials
@@ -61,11 +69,39 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: ecr push
+      id: build-image
       if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: ${{ env.TF_VAR_ENV }}/daiku-app
         AWS_ACCOUNT_ID: ${{ steps.aws-credentials.outputs.aws-account-id }}
+        IMAGE_TAG: latest
       run: |
-        docker tag springio/${{ env.TF_VAR_ENV }}/daiku-app-docker:latest ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}
+        docker tag springio/${{ env.TF_VAR_ENV }}/daiku-app-docker:latest ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
         docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+    - name: Create task-definition.json file from base64
+      if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
+      run: |
+        if [[ -n "${{ env.AWS_ECS_TASK_DEFINITION_BASE64 }}" ]]; then
+          echo "${{ env.AWS_ECS_TASK_DEFINITION_BASE64 }}" | base64 -d > ./task-definition.json
+        fi
+
+    - name: Deploy to Amazon ECS
+      id: task-def
+      if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ./task-definition.json
+        container-name: ${{ env.AWS_ECS_CONTAINER_NAME }}
+        image: ${{ steps.build-image.outputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: ${{ env.AWS_ECS_SERVICE }}
+        cluster: ${{ env.AWS_ECS_CLUSTER }}
+        wait-for-service-stability: true

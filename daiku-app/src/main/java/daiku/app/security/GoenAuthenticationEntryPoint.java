@@ -34,6 +34,6 @@ public class GoenAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 ErrorResponse.builder()
                         .code(HttpStatus.NOT_FOUND.value())
                         .message(authException.getMessage())
-                        .errorCd("").build()));
+                        .errorCd("E0004").build()));
     }
 }
