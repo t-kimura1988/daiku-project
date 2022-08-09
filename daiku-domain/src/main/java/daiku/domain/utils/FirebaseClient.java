@@ -74,7 +74,7 @@ public class FirebaseClient {
         credentials.put("type", type);
         credentials.put("project_id", projectId);
         credentials.put("private_key_id", privateKeyId);
-        credentials.put("private_key", privateKey.replace("/\n/g", "\n"));
+        credentials.put("private_key", privateKey);
         credentials.put("client_email", clientEmail);
         credentials.put("client_id", clientId);
         credentials.put("auth_uri", "https://accounts.google.com/o/oauth2/auth");
