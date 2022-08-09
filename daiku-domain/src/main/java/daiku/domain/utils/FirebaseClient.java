@@ -53,6 +53,7 @@ public class FirebaseClient {
             FileWriter fw = new FileWriter(FIREBASE_CREDENTIALS_PATH);
             try (PrintWriter pw = new PrintWriter(new BufferedWriter(fw))) {
                 String str = mapper.writeValueAsString(getCredentials());
+                pw.println(str);
             }
 
             FileInputStream serviceAccount = new FileInputStream(FIREBASE_CREDENTIALS_PATH);
@@ -80,7 +81,6 @@ public class FirebaseClient {
         credentials.put("token_uri", "https://oauth2.googleapis.com/token");
         credentials.put("auth_provider_x509_cert_url", "https://www.googleapis.com/oauth2/v1/certs");
         credentials.put("client_x509_cert_url", clientX509CertUrl);
-        System.out.println(credentials);
         return credentials;
 
     }
