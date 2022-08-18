@@ -3,17 +3,12 @@ package daiku.domain.infra.repository;
 import daiku.domain.infra.dao.GoalArchiveDao;
 import daiku.domain.infra.dao.GoalDao;
 import daiku.domain.infra.entity.TGoalArchive;
-import daiku.domain.infra.entity.TGoals;
 import daiku.domain.infra.model.param.GoalArchiveDaoParam;
-import daiku.domain.infra.model.param.GoalDaoParam;
 import daiku.domain.infra.model.res.GoalArchiveSearchModel;
-import daiku.domain.infra.model.res.GoalSearchModel;
-import daiku.domain.infra.utils.CollectorUtil;
 import org.seasar.doma.jdbc.SelectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +24,10 @@ public class GoalArchiveRepository {
 
     public List<GoalArchiveSearchModel> archiveSearch(GoalArchiveDaoParam param) {
         return goalArchiveDao.selectArchive(param, SelectOptions.get(), toList());
+    }
+
+    public List<GoalArchiveSearchModel> myArchiveSearch(GoalArchiveDaoParam param) {
+        return goalArchiveDao.selectMyArchive(param, SelectOptions.get(), toList());
     }
 
     public Optional<GoalArchiveSearchModel> archiveOptional(GoalArchiveDaoParam param) {

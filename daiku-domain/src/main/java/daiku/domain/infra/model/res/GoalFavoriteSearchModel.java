@@ -11,6 +11,8 @@ public class GoalFavoriteSearchModel {
     private Long id;
     private Long goalId;
     private Long accountId;
+    private Long archiveId;
+    private LocalDate archivesCreateDate;
     private LocalDate favoriteAddDate;
     private LocalDate goalCreateDate;
     private String goalCreatedAccountFamilyName;

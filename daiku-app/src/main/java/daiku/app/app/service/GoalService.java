@@ -48,6 +48,12 @@ public class GoalService {
                 .goalList(goalList).build();
     }
 
+    public MyGoalArchiveSearchServiceOutput myArchiveSearch(MyGoalArchiveSearchServiceInput input) {
+        var goalList = goalArchiveRepository.myArchiveSearch(input.toRepository());
+        return MyGoalArchiveSearchServiceOutput.builder()
+                .goalList(goalList).build();
+    }
+
     public GoalArchiveDetailServiceOutput archiveDetail(GoalArchiveDetailServiceInput input) throws GoenNotFoundException {
         var goalArchive = goalArchiveRepository.archiveOptional(input.toArchiveRepository())
                 .orElseThrow(
@@ -80,6 +86,19 @@ public class GoalService {
                 .goalArchiveInfo(goalArchive)
                 .goalInfo(goalInfo)
                 .processInfo(processInfo).build();
+    }
+
+    public GoalArchiveEditDisplayServiceOutput getArchiveEdit(GoalArchiveEditDisplayServiceInput input) throws GoenNotFoundException{
+        var goalArchive = goalArchiveRepository.archiveOptional(input.toArchiveRepository())
+                .orElseThrow(
+                        () -> {
+                            Map<String, String> param = new LinkedHashMap<>();
+                            param.put("Archive.id: ", input.getArchiveId().toString());
+                            return new GoenNotFoundException("goal detail info no found", param);
+                        });
+        return GoalArchiveEditDisplayServiceOutput.builder()
+                .goalArchiveInfo(goalArchive)
+                .build();
     }
 
     public GoalArchiveUpdateDispServiceOutput archiveUpdateDisp(GoalArchiveUpdateDispServiceInput input) throws GoenNotFoundException {
@@ -161,6 +180,8 @@ public class GoalService {
         archive.set(input.toEntity());
         goalArchiveRepository.selectByGoalId(goal.getId()).ifPresentOrElse(
                 goalArchive -> {
+                    goalArchive.setThoughts(input.getThoughts());
+                    goalArchive.setPublish(input.getPublish());
                     goalArchive.setUpdatingFlg(UpdatingFlg.ARCHIVING);
                     goalArchiveRepository.save(goalArchive);
                     archive.set(goalArchive);

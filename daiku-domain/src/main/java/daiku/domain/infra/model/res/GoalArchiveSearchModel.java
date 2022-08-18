@@ -13,6 +13,7 @@ public class GoalArchiveSearchModel {
     private LocalDate archivesCreateDate;
     private PublishLevel publish;
     private String thoughts;
+    private String updatingFlg;
     private Long goalId;
     private LocalDate goalCreateDate;
     private String title;
