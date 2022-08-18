@@ -15,10 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -82,9 +79,19 @@ public class GoalController {
         return goalService.archiveSearch(param.toService(user.account().getId())).toResponse();
     }
 
+    @GetMapping("/my-archive/list")
+    public List<GoalArchiveSearchModel> myArchiveList(MyGoalArchiveSearchParameter param, @AuthenticationPrincipal GoenUserDetails user) {
+        return goalService.myArchiveSearch(param.toService(user.account().getId())).toResponse();
+    }
+
     @RequestMapping(value = "/archive/detail", method = RequestMethod.GET)
     public GoalArchiveDetailResponse archiveDetail(GoalArchiveDetailParameter param, @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException {
         return goalService.archiveDetail(param.toService(user.account().getId())).toResponse();
+    }
+
+    @GetMapping("/archive/edit-disp")
+    public GoalArchiveSearchModel archiveEditDisplay(GoalArchiveEditDispParameter param, @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException {
+        return goalService.getArchiveEdit(param.toService(user.account().getId())).toResponse();
     }
 
     @RequestMapping(value = "/update/archive/updating-flg", method = RequestMethod.POST)
