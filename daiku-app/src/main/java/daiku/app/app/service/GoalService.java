@@ -88,6 +88,30 @@ public class GoalService {
                 .processInfo(processInfo).build();
     }
 
+    public MyGoalArchiveDetailServiceOutput myArchiveDetail(MyGoalArchiveDetailServiceInput input) throws GoenNotFoundException {
+        var goalArchive = goalArchiveRepository.myArchiveOptional(input.toArchiveRepository())
+                .orElseThrow(
+                        () -> {
+                            Map<String, String> param = new LinkedHashMap<>();
+                            param.put("Archive.id: ", input.getArchiveId().toString());
+                            return new GoenNotFoundException("goal detail info no found", param);
+                        });
+        return MyGoalArchiveDetailServiceOutput.builder()
+                .goalArchiveInfo(goalArchive)
+                .goalInfo(goalRepository.detail(GoalDaoParam.builder()
+                                .goalId(goalArchive.getGoalId())
+                                .createDate(goalArchive.getGoalCreateDate()).build())
+                        .orElseThrow(
+                                () -> {
+                                    Map<String, String> param = new LinkedHashMap<>();
+                                    param.put("goal.id: ", input.getArchiveId().toString());
+                                    return new GoenNotFoundException("goal detail info no found", param);
+                                }))
+                .processInfo( processRepository.search(ProcessDaoParam.builder()
+                        .createDate(goalArchive.getGoalCreateDate())
+                        .goalId(goalArchive.getGoalId()).build())).build();
+    }
+
     public GoalArchiveEditDisplayServiceOutput getArchiveEdit(GoalArchiveEditDisplayServiceInput input) throws GoenNotFoundException{
         var goalArchive = goalArchiveRepository.archiveOptional(input.toArchiveRepository())
                 .orElseThrow(
