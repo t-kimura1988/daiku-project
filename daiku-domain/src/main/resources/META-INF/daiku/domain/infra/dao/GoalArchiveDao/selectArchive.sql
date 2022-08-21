@@ -19,6 +19,8 @@ from t_goal_archives ga
          inner join t_accounts a on g.account_id = a.id
 where
     (g.account_id = /* param.accountId */0 or g.account_id <> /* param.accountId */0 and ga.publish='1' or ga.publish='2')
+and
+    ga.updating_flg = '0'
 /*%if param.archiveId != null */
 and
     ga.id = /* param.archiveId */0

@@ -34,6 +34,10 @@ public class GoalArchiveRepository {
         return goalArchiveDao.selectArchive(param, SelectOptions.get(), toOptional());
     }
 
+    public Optional<GoalArchiveSearchModel> myArchiveOptional(GoalArchiveDaoParam param) {
+        return goalArchiveDao.selectMyArchive(param, SelectOptions.get(), toOptional());
+    }
+
     public Optional<TGoalArchive> selectByGoalId(Long goalId) {
         return goalArchiveDao.selectByGoalId(goalId, toOptional());
     }

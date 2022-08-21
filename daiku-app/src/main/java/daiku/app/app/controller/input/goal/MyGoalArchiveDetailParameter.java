@@ -2,7 +2,6 @@ package daiku.app.app.controller.input.goal;
 
 import daiku.app.app.service.input.goal.GoalArchiveDetailServiceInput;
 import daiku.app.app.service.input.goal.GoalArchiveUpdateDispServiceInput;
-import daiku.app.app.service.input.goal.MyGoalArchiveDetailServiceInput;
 import lombok.Builder;
 import lombok.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,21 +10,13 @@ import java.time.LocalDate;
 
 @Value
 @Builder
-public class GoalArchiveDetailParameter {
+public class MyGoalArchiveDetailParameter {
     Long archiveId;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate archiveCreateDate;
 
     public GoalArchiveDetailServiceInput toService(Long accountId) {
         return GoalArchiveDetailServiceInput.builder()
-                .archiveId(archiveId)
-                .accountId(accountId)
-                .archiveCreateDate(archiveCreateDate)
-                .build();
-    }
-
-    public MyGoalArchiveDetailServiceInput toMyArchiveService(Long accountId) {
-        return MyGoalArchiveDetailServiceInput.builder()
                 .archiveId(archiveId)
                 .accountId(accountId)
                 .archiveCreateDate(archiveCreateDate)

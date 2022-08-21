@@ -89,6 +89,11 @@ public class GoalController {
         return goalService.archiveDetail(param.toService(user.account().getId())).toResponse();
     }
 
+    @RequestMapping(value = "/my-archive/detail", method = RequestMethod.GET)
+    public GoalArchiveDetailResponse myArchiveDetail(GoalArchiveDetailParameter param, @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException {
+        return goalService.myArchiveDetail(param.toMyArchiveService(user.account().getId())).toResponse();
+    }
+
     @GetMapping("/archive/edit-disp")
     public GoalArchiveSearchModel archiveEditDisplay(GoalArchiveEditDispParameter param, @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException {
         return goalService.getArchiveEdit(param.toService(user.account().getId())).toResponse();
