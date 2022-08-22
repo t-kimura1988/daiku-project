@@ -113,7 +113,7 @@ public class GoalService {
     }
 
     public GoalArchiveEditDisplayServiceOutput getArchiveEdit(GoalArchiveEditDisplayServiceInput input) throws GoenNotFoundException{
-        var goalArchive = goalArchiveRepository.archiveOptional(input.toArchiveRepository())
+        var goalArchive = goalArchiveRepository.myArchiveOptional(input.toArchiveRepository())
                 .orElseThrow(
                         () -> {
                             Map<String, String> param = new LinkedHashMap<>();

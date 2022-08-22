@@ -13,7 +13,8 @@ select
     a.given_name,
     a.nick_name,
     a.user_image,
-    case when ga.publish='1' and g.account_id <> /* param.accountId */0 then 0 else (select count(1) from t_processes pc where pc.goal_id=g.id) end process_count
+    case when ga.publish='1' and g.account_id <> /* param.accountId */0 then 0 else (select count(1) from t_processes pc where pc.goal_id=g.id) end process_count,
+    g.account_id as goal_create_account_id
 from t_goal_archives ga
          inner join t_goals g on g.id = ga.goal_id
          inner join t_accounts a on g.account_id = a.id
