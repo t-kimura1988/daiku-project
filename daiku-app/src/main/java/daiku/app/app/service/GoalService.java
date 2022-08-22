@@ -76,8 +76,7 @@ public class GoalService {
                     return new GoenNotFoundException("goal detail info no found", param);
                 });
 
-        if(input.getAccountId().equals(goalInfo.getAccountId()) ||
-            !input.getAccountId().equals(goalInfo.getAccountId()) && (goalArchive.getPublish().equals(PublishLevel.ALL))) {
+        if(goalArchive.getPublish().equals(PublishLevel.ALL)) {
             processInfo = processRepository.search(ProcessDaoParam.builder()
                     .createDate(goalInfo.getCreateDate())
                     .goalId(goalInfo.getId()).build());
