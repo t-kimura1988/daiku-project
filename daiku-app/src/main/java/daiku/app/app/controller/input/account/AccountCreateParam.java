@@ -23,9 +23,10 @@ public class AccountCreateParam {
                 .build();
     }
 
-    public AccountUpdateServiceInput toUpdateService(Long accountId) {
+    public AccountUpdateServiceInput toUpdateService(TAccounts account) {
         return AccountUpdateServiceInput.builder()
-                .accountId(accountId)
+                .accountId(account.getId())
+                .uid(account.getUid())
                 .familyName(familyName)
                 .givenName(givenName)
                 .nickName(nickName)

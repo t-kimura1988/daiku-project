@@ -40,8 +40,8 @@ public class AccountController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public TAccounts update(
             @RequestBody AccountCreateParam param,
-            @AuthenticationPrincipal GoenUserDetails userDetails) {
-        return accountService.update(param.toUpdateService(userDetails.account().getId())).toResponse();
+            @AuthenticationPrincipal GoenUserDetails userDetails) throws GoenNotFoundException {
+        return accountService.update(param.toUpdateService(userDetails.account())).toResponse();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
