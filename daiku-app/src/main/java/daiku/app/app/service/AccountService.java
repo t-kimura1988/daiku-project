@@ -60,10 +60,16 @@ public class AccountService {
         return accounts;
     }
 
-    public AccountUpdateServiceOutput update(AccountUpdateServiceInput input) {
+    public AccountUpdateServiceOutput update(AccountUpdateServiceInput input) throws GoenNotFoundException {
         accountRepository.save(input.toRepo());
         return AccountUpdateServiceOutput.builder()
-                .accounts(input.toRepo()).build();
+                .accounts(accountRepository.selectByUid(input.getUid()).orElseThrow(
+                        () -> {
+                            Map<String, String> param = new LinkedHashMap<>();
+                            param.put("uid: ", input.getUid());
+                            return new GoenNotFoundException("goal detail info no found", param);
+                        }
+                )).build();
     }
 
     public TAccounts delete(AccountDeleteServiceInput input) throws FirebaseAuthException {
