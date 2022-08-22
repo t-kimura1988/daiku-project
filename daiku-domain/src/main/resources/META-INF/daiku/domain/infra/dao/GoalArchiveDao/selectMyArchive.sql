@@ -14,7 +14,8 @@ select
     a.given_name,
     a.nick_name,
     a.user_image,
-    (select count(1) from t_processes pc where pc.goal_id=g.id) process_count
+    (select count(1) from t_processes pc where pc.goal_id=g.id) process_count,
+    g.account_id as goal_create_account_id
 from t_goal_archives ga
          inner join t_goals g on g.id = ga.goal_id
          inner join t_accounts a on g.account_id = a.id

@@ -20,6 +20,7 @@ public class GoalArchiveSearchModel {
     private String purpose;
     private String aim;
     private LocalDate dueDate;
+    private Long goalCreateAccountId;
     private String familyName;
     private String givenName;
     private String nickName;
