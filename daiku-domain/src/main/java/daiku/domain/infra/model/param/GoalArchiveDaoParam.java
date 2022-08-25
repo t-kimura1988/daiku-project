@@ -12,4 +12,5 @@ public class GoalArchiveDaoParam {
     private Long goalId;
     private Long accountId;
     private LocalDate archiveCreateDate;
+    private int page;
 }

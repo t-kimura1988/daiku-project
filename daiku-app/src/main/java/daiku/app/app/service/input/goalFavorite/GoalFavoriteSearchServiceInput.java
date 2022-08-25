@@ -12,11 +12,13 @@ public class GoalFavoriteSearchServiceInput {
     Long accountId;
     LocalDate fromDate;
     LocalDate toDate;
+    int page;
 
     public GoalFavoriteDaoParam toParam() {
         return GoalFavoriteDaoParam.builder()
                 .favoriteCreateDateFrom(fromDate)
                 .favoriteCreateDateTo(toDate)
-                .accountId(accountId).build();
+                .accountId(accountId)
+                .page(page).build();
     }
 }

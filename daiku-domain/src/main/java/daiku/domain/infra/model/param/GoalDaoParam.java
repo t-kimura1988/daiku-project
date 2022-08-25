@@ -2,7 +2,6 @@ package daiku.domain.infra.model.param;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Value;
 
 import java.time.LocalDate;
 
@@ -15,4 +14,5 @@ public class GoalDaoParam {
     private LocalDate toCreateDate;
     private LocalDate createDate;
     private Boolean olderThan;
+    private int page;
 }

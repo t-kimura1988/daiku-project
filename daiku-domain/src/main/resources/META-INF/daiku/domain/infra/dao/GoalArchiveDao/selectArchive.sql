@@ -30,3 +30,6 @@ and
 and
     ga.archives_create_date = /* param.archiveCreateDate */0
 /*%end*/
+/*%if param.page != 0 */
+    limit /* param.page */10
+/*%end*/

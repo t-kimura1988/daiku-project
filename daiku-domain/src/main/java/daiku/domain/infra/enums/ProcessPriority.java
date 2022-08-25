@@ -33,9 +33,6 @@ public enum ProcessPriority implements CodeEnum<ProcessPriority> {
 
     @JsonCreator
     public static ProcessPriority fromString(String value) {
-        log.info("=========");
-        log.info(value);
-        log.info("=========");
         return valueMap.get(value);
     }
 }

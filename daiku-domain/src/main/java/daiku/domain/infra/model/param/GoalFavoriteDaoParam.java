@@ -13,4 +13,5 @@ public class GoalFavoriteDaoParam {
     private Long accountId;
     private LocalDate favoriteCreateDateFrom;
     private LocalDate favoriteCreateDateTo;
+    private int page;
 }
