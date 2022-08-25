@@ -12,6 +12,7 @@ public class GoalSearchServiceInput {
     Long accountId;
     LocalDate fromDate;
     LocalDate toDate;
+    int page;
 
     public GoalDaoParam toRepository() {
         return GoalDaoParam.builder()
@@ -19,6 +20,7 @@ public class GoalSearchServiceInput {
                 .olderThan(fromDate.getYear() < LocalDate.now().getYear() - 10)
                 .fromCreateDate(fromDate)
                 .toCreateDate(toDate)
+                .page(page)
                 .build();
     }
 }

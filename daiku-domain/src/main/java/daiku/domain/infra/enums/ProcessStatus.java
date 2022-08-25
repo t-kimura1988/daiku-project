@@ -33,9 +33,6 @@ public enum ProcessStatus implements CodeEnum<ProcessStatus> {
 
     @JsonCreator
     public static ProcessStatus fromString(String value) {
-        log.info("=========");
-        log.info(value);
-        log.info("=========");
         return valueMap.get(value);
     }
 }

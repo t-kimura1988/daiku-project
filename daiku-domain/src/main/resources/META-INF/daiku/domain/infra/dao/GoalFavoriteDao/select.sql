@@ -35,3 +35,6 @@ and
 and
     g.create_date between /* param.favoriteCreateDateFrom */'2022-01-01' and /* param.favoriteCreateDateTo */'2022-01-01'
 /*%end*/
+/*%if param.page != 0 */
+    limit /* param.page */10
+/*%end*/

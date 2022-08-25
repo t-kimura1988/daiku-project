@@ -24,6 +24,9 @@ public class ProcessHistoryCreateServiceInput {
         entity.setBeforePriority(oldData.getPriority());
         entity.setBeforeProcessStatus(oldData.getProcessStatus());
         entity.setGoalCreateDate(oldData.getGoalCreateDate());
+
+        entity.setProcessStartDate(oldData.getProcessStartDate());
+        entity.setProcessEndDate(oldData.getProcessEndDate());
         entity.setProcessStatus(processStatus);
         entity.setPriority(priority);
         entity.setComment(comment);

@@ -42,3 +42,6 @@ where
     g.account_id =  /* param.accountId */0
 /*%end*/
 order by g.due_date
+/*%if param.page != 0 */
+    limit /* param.page */10
+/*%end*/

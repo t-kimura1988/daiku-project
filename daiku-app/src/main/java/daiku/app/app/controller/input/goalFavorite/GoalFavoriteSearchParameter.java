@@ -10,12 +10,14 @@ import java.time.LocalDate;
 @Builder
 public class GoalFavoriteSearchParameter {
     int year;
+    int page;
 
     public GoalFavoriteSearchServiceInput toService(Long accountId) {
         return GoalFavoriteSearchServiceInput.builder()
                 .accountId(accountId)
                 .fromDate(LocalDate.of(year, 1, 1))
                 .toDate(LocalDate.of(year + 1, 1, 1))
+                .page(page)
                 .build();
     }
 
