@@ -48,8 +48,7 @@ public class AccountController {
     public TAccounts delete(
             @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException {
         return accountService.delete(AccountDeleteServiceInput.builder()
-                .accountId(userDetails.account().getId())
-                .uid(userDetails.account().getUid()).build());
+                .account(userDetails.account()).build());
     }
 
     @RequestMapping(value = "/re-update", method = RequestMethod.POST)
