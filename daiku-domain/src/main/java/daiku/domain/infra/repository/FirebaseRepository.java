@@ -1,6 +1,7 @@
 package daiku.domain.infra.repository;
 
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import daiku.domain.infra.enums.AccountType;
 import daiku.domain.infra.model.param.firestore.BusinessDataAsync;
 import daiku.domain.utils.FirebaseClient;
@@ -17,6 +18,13 @@ public class FirebaseRepository {
     FirebaseClient client;
 
     public void asyncBusinessData(BusinessDataAsync async) {
+    }
+
+    public void deleteAccount(String uid) throws FirebaseAuthException {
+
+        client.auth().updateUser(new UserRecord.UpdateRequest(uid)
+                .setDisabled(true));
+        client.auth().revokeRefreshTokens(uid);
     }
 
     public void accountClaims(String uid) throws FirebaseAuthException {

@@ -9,18 +9,15 @@ import lombok.Value;
 @Value
 @Builder
 public class AccountDeleteServiceInput {
-    Long accountId;
-    String uid;
+    TAccounts account;
 
     public TAccounts toRepo() {
-        TAccounts accounts = new TAccounts();
-        accounts.setId(accountId);
-        accounts.setDelFlg(DelFlg.DELETED);
-        return accounts;
+        account.setDelFlg(DelFlg.DELETED);
+        return account;
     }
 
     public UserRecord.UpdateRequest toFirebaseUser() {
-        return new UserRecord.UpdateRequest(uid)
+        return new UserRecord.UpdateRequest(account.getUid())
                 .setDisabled(true);
     }
 }

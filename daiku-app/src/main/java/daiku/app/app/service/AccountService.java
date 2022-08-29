@@ -74,8 +74,7 @@ public class AccountService {
 
     public TAccounts delete(AccountDeleteServiceInput input) throws FirebaseAuthException {
         accountRepository.save(input.toRepo());
-        FirebaseAuth.getInstance().updateUser(input.toFirebaseUser());
-        FirebaseAuth.getInstance().revokeRefreshTokens(input.getUid());
+        firebaseRepository.deleteAccount(input.getAccount().getUid());
         return input.toRepo();
     }
 
