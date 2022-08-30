@@ -24,7 +24,7 @@ public class FirebaseAsyncBatchConfig {
 
     @Autowired
     private JobLauncher jobLauncher;
-    @Scheduled(cron = "*/5 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void testTask() throws Exception {
         JobParameters params = new JobParametersBuilder()
                 .addString("businessDataAsyncFirebaseJob", String.valueOf(System.currentTimeMillis()))

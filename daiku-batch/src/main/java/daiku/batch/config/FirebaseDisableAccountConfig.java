@@ -24,7 +24,7 @@ public class FirebaseDisableAccountConfig {
 
     @Autowired
     private JobLauncher jobLauncher;
-    @Scheduled(cron = "*/20 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void testTask() throws Exception {
         JobParameters params = new JobParametersBuilder()
                 .addString("firebaseDisableAccountJob", String.valueOf(System.currentTimeMillis()))
