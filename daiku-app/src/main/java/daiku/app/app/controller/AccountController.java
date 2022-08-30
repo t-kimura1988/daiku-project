@@ -53,10 +53,9 @@ public class AccountController {
 
     @RequestMapping(value = "/re-update", method = RequestMethod.POST)
     public TAccounts reUpdate(
-            @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException {
+            @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException, GoenNotFoundException {
         return accountService.reUpdate(AccountReUpdateServiceInput.builder()
-                .accountId(userDetails.account().getId())
-                .uid(userDetails.account().getUid()).build());
+                .account(userDetails.account()).build());
     }
 
 }

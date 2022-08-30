@@ -14,7 +14,8 @@ import java.util.Map;
 @Domain(valueType = String.class, factoryMethod = "of")
 public enum DelFlg implements CodeEnum<DelFlg> {
     NOT_DELETED("0", "未削除"),
-    DELETED("1", "削除");
+    DELETED("1", "削除"),
+    FIREBASE_DELETED("2", "Firebase連携済み");
 
     @Getter
     private final String value;

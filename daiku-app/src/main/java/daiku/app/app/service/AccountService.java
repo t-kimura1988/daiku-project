@@ -1,6 +1,5 @@
 package daiku.app.app.service;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import daiku.app.app.service.input.account.AccountCreateServiceInput;
 import daiku.app.app.service.input.account.AccountDeleteServiceInput;
@@ -37,10 +36,17 @@ public class AccountService {
                         }
                 );
 
+        System.out.println(account);
         if(DelFlg.DELETED.equals(account.getDelFlg())) {
             Map<String, String> param = new LinkedHashMap<>();
             param.put("account uid: ", uid);
             throw  new GoenIntegrityException("アカウントが削除済み", param, "E0001");
+        }
+
+        if(DelFlg.FIREBASE_DELETED.equals(account.getDelFlg())) {
+            Map<String, String> param = new LinkedHashMap<>();
+            param.put("account uid: ", uid);
+            throw  new GoenIntegrityException("アカウントが削除済み", param, "E0005");
         }
 
         return account;
@@ -74,14 +80,19 @@ public class AccountService {
 
     public TAccounts delete(AccountDeleteServiceInput input) throws FirebaseAuthException {
         accountRepository.save(input.toRepo());
-        firebaseRepository.deleteAccount(input.getAccount().getUid());
         return input.toRepo();
     }
 
-    public TAccounts reUpdate(AccountReUpdateServiceInput input) throws FirebaseAuthException {
+    public TAccounts reUpdate(AccountReUpdateServiceInput input) throws FirebaseAuthException, GoenNotFoundException {
         accountRepository.save(input.toRepo());
-        FirebaseAuth.getInstance().updateUser(input.toFirebaseUser());
-        return input.toRepo();
+        return accountRepository.selectByUid(input.getAccount().getUid())
+                .orElseThrow(
+                        () -> {
+                            Map<String, String> param = new LinkedHashMap<>();
+                            param.put("uid: ", input.getAccount().getUid());
+                            return new GoenNotFoundException("goal detail info no found", param);
+                        }
+                );
     }
 
 

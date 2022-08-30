@@ -1,6 +1,6 @@
 package daiku.batch.config;
 
-import daiku.batch.tasklet.BusinessDataAsyncToFirebaseTasklet;
+import daiku.batch.tasklet.FirebaseDisableAccountTasklet;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 
 @Configuration
-public class FirebaseAsyncBatchConfig {
+public class FirebaseDisableAccountConfig {
 
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
@@ -20,22 +20,22 @@ public class FirebaseAsyncBatchConfig {
     private StepBuilderFactory stepBuilderFactory;
 
     @Autowired
-    private BusinessDataAsyncToFirebaseTasklet tasklet1;
+    private FirebaseDisableAccountTasklet firebaseAccountDeleteTasklet;
 
     @Autowired
     private JobLauncher jobLauncher;
-    @Scheduled(cron = "*/5 * * * * *")
+    @Scheduled(cron = "*/20 * * * * *")
     public void testTask() throws Exception {
         JobParameters params = new JobParametersBuilder()
-                .addString("businessDataAsyncFirebaseJob", String.valueOf(System.currentTimeMillis()))
+                .addString("firebaseDisableAccountJob", String.valueOf(System.currentTimeMillis()))
                 .toJobParameters();
 
-        JobExecution exe = jobLauncher.run(firebaseAsyncJob(), params);
+        JobExecution exe = jobLauncher.run(firebaseDisableJob(), params);
 
     }
 
-    public Job firebaseAsyncJob() {
-        return jobBuilderFactory.get("businessDataAsyncFirebaseJob")
+    public Job firebaseDisableJob() {
+        return jobBuilderFactory.get("firebaseDisableAccountJob")
                 .incrementer(new RunIdIncrementer())
                 .start(step1())
                 .build();
@@ -43,7 +43,7 @@ public class FirebaseAsyncBatchConfig {
 
     public Step step1() {
         return stepBuilderFactory.get("step1")
-                .tasklet(tasklet1)
+                .tasklet(firebaseAccountDeleteTasklet)
                 .build();
     }
 }

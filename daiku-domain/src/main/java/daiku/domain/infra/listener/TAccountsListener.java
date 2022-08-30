@@ -22,9 +22,13 @@ public class TAccountsListener<E extends TAccounts> implements EntityListener<E>
     @Override
     public void preUpdate(E entity, PreUpdateContext<E> context) {
         val timestamp = LocalDateTime.now();
-        var account = (GoenUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(SecurityContextHolder.getContext().getAuthentication() != null) {
+            var account = (GoenUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            entity.setUpdatedBy(account.account().getId());
+        } else {
+            entity.setUpdatedBy(0L);
+        }
         entity.setUpdatedAt(timestamp);
-        entity.setUpdatedBy(account.account().getId());
     }
 
 
