@@ -71,7 +71,7 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: ecr push app
-      id: build-image
+      id: build-image-app
       if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -84,7 +84,7 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY_APP:$IMAGE_TAG"
 
     - name: ecr push batch
-      id: build-image
+      id: build-image-app
       if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
