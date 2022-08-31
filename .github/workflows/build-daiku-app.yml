@@ -56,6 +56,8 @@ jobs:
       run: |
         ./gradlew :daiku-app:build
         ./gradlew :daiku-app:bootBuildImage --imageName=springio/${{ env.TF_VAR_ENV }}/daiku-app-docker:latest
+        ./gradlew :daiku-batch:build
+        ./gradlew :daiku-app:bootBuildImage --imageName=springio/${{ env.TF_VAR_ENV }}/daiku-batch-docker:latest
 
     - name: Publish Test Report
       uses: mikepenz/action-junit-report@v3
@@ -68,18 +70,31 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: ecr push
+    - name: ecr push app
       id: build-image
       if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: ${{ env.TF_VAR_ENV }}/daiku-app
+        ECR_REPOSITORY_APP: ${{ env.TF_VAR_ENV }}/daiku-app
         AWS_ACCOUNT_ID: ${{ steps.aws-credentials.outputs.aws-account-id }}
         IMAGE_TAG: latest
       run: |
-        docker tag springio/${{ env.TF_VAR_ENV }}/daiku-app-docker:latest ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
-        docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY }}
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        docker tag springio/${{ env.TF_VAR_ENV }}/daiku-app-docker:latest ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY_APP }}:${{ env.IMAGE_TAG }}
+        docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY_APP }}
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY_APP:$IMAGE_TAG"
+
+    - name: ecr push batch
+      id: build-image
+      if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY_BATCH: ${{ env.TF_VAR_ENV }}/daiku-batch
+        AWS_ACCOUNT_ID: ${{ steps.aws-credentials.outputs.aws-account-id }}
+        IMAGE_TAG: latest
+      run: |
+        docker tag springio/${{ env.TF_VAR_ENV }}/daiku-batch-docker:latest ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY_BATCH }}:${{ env.IMAGE_TAG }}
+        docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ env.ECR_REPOSITORY_BATCH }}
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY_BATCH:$IMAGE_TAG"
 
     - name: Create task-definition.json file from base64
       if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
