@@ -1,19 +1,22 @@
 package daiku.domain.infra.dao;
 
 import daiku.domain.infra.entity.TAccounts;
-import org.seasar.doma.Dao;
-import org.seasar.doma.Insert;
-import org.seasar.doma.Select;
-import org.seasar.doma.Update;
+import daiku.domain.infra.model.param.AccountDaoParam;
+import org.seasar.doma.*;
 import org.seasar.doma.boot.ConfigAutowireable;
+import org.seasar.doma.jdbc.SelectOptions;
 
 import java.util.Optional;
+import java.util.stream.Collector;
 
 @ConfigAutowireable
 @Dao
 public interface AccountDao {
     @Select
     Optional<TAccounts> selectByUid(String uid);
+
+    @Select(strategy = SelectType.COLLECT)
+    <R> R select(AccountDaoParam param, SelectOptions options, Collector<TAccounts, ?, R> collector);
 
     @Select
     Long selectCount();

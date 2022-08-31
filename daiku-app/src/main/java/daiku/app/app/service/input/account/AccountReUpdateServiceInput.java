@@ -1,26 +1,26 @@
 package daiku.app.app.service.input.account;
 
-import com.google.firebase.auth.UserRecord;
+import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.infra.entity.TAccounts;
 import daiku.domain.infra.enums.DelFlg;
 import lombok.Builder;
 import lombok.Value;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Value
 @Builder
 public class AccountReUpdateServiceInput {
-    Long accountId;
-    String uid;
+    TAccounts account;
 
-    public TAccounts toRepo() {
-        TAccounts accounts = new TAccounts();
-        accounts.setId(accountId);
-        accounts.setDelFlg(DelFlg.NOT_DELETED);
-        return accounts;
-    }
-
-    public UserRecord.UpdateRequest toFirebaseUser() {
-        return new UserRecord.UpdateRequest(uid)
-                .setDisabled(false);
+    public TAccounts toRepo() throws GoenNotFoundException {
+        if(account.getDelFlg() == DelFlg.NOT_DELETED) {
+            Map<String, String> param = new LinkedHashMap<>();
+            param.put("uid: ", account.getUid());
+            throw  new GoenNotFoundException("account is not deleted", param);
+        }
+        account.setDelFlg(DelFlg.NOT_DELETED);
+        return account;
     }
 }

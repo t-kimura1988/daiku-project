@@ -22,9 +22,14 @@ public class FirebaseRepository {
 
     public void deleteAccount(String uid) throws FirebaseAuthException {
 
+//        client.auth().updateUser(new UserRecord.UpdateRequest(uid)
+//                .setDisabled(true));
+        client.auth().deleteUser(uid);
+    }
+
+    public void reUpdateAccount(String uid) throws FirebaseAuthException {
         client.auth().updateUser(new UserRecord.UpdateRequest(uid)
-                .setDisabled(true));
-        client.auth().revokeRefreshTokens(uid);
+                .setDisabled(false));
     }
 
     public void accountClaims(String uid) throws FirebaseAuthException {

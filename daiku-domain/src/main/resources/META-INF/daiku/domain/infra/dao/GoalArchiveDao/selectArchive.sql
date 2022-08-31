@@ -17,7 +17,7 @@ select
     g.account_id as goal_create_account_id
 from t_goal_archives ga
          inner join t_goals g on g.id = ga.goal_id
-         inner join t_accounts a on g.account_id = a.id
+         inner join t_accounts a on g.account_id = a.id and a.del_flg='0'
 where
     (g.account_id = /* param.accountId */0 or g.account_id <> /* param.accountId */0 and ga.publish='1' or ga.publish='2')
 and
