@@ -2,6 +2,7 @@ package daiku.app.app.controller;
 
 import com.google.firebase.auth.FirebaseAuthException;
 import daiku.app.app.controller.input.account.AccountCreateParam;
+import daiku.app.app.controller.input.account.AccountUploadParam;
 import daiku.app.app.service.AccountService;
 import daiku.app.app.service.input.account.AccountDeleteServiceInput;
 import daiku.app.app.service.input.account.AccountReUpdateServiceInput;
@@ -12,10 +13,8 @@ import daiku.domain.infra.entity.TAccounts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -56,6 +55,11 @@ public class AccountController {
             @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException, GoenNotFoundException {
         return accountService.reUpdate(AccountReUpdateServiceInput.builder()
                 .account(userDetails.account()).build());
+    }
+
+    @PostMapping(value = "/upload" )
+    public TAccounts upload(@RequestBody @Validated AccountUploadParam param, @AuthenticationPrincipal GoenUserDetails userDetails) throws GoenNotFoundException {
+        return accountService.upload(param.toService(userDetails.account()));
     }
 
 }
