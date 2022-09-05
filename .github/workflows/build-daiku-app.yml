@@ -61,7 +61,7 @@ jobs:
         ./gradlew :daiku-app:build
         ./gradlew :daiku-app:bootBuildImage --imageName=springio/${{ env.TF_VAR_ENV }}/daiku-app-docker:latest
         ./gradlew :daiku-batch:build
-        ./gradlew :daiku-app:bootBuildImage --imageName=springio/${{ env.TF_VAR_ENV }}/daiku-batch-docker:latest
+        ./gradlew :daiku-batch:bootBuildImage --imageName=springio/${{ env.TF_VAR_ENV }}/daiku-batch-docker:latest
 
     - name: Publish Test Report
       uses: mikepenz/action-junit-report@v3
