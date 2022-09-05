@@ -44,4 +44,6 @@ public class TAccounts {
 
     private Long updatedBy;
 
+    private String profileBackImage;
+
 }

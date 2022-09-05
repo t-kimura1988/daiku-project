@@ -129,7 +129,7 @@ jobs:
         cluster: ${{ env.AWS_ECS_CLUSTER }}
         wait-for-service-stability: true
 
-    - name: Deploy Amazon ECS task definition
+    - name: Deploy Amazon ECS task batch definition
       id: batch-deploy
       if: (github.ref == 'refs/heads/master' ||  github.ref == 'refs/heads/develop') && github.event_name == 'push'
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1

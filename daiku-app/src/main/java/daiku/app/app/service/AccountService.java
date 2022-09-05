@@ -1,10 +1,7 @@
 package daiku.app.app.service;
 
 import com.google.firebase.auth.FirebaseAuthException;
-import daiku.app.app.service.input.account.AccountCreateServiceInput;
-import daiku.app.app.service.input.account.AccountDeleteServiceInput;
-import daiku.app.app.service.input.account.AccountReUpdateServiceInput;
-import daiku.app.app.service.input.account.AccountUpdateServiceInput;
+import daiku.app.app.service.input.account.*;
 import daiku.app.app.service.output.account.AccountUpdateServiceOutput;
 import daiku.domain.exception.GoenIntegrityException;
 import daiku.domain.exception.GoenNotFoundException;
@@ -36,7 +33,6 @@ public class AccountService {
                         }
                 );
 
-        System.out.println(account);
         if(DelFlg.DELETED.equals(account.getDelFlg())) {
             Map<String, String> param = new LinkedHashMap<>();
             param.put("account uid: ", uid);
@@ -85,6 +81,18 @@ public class AccountService {
 
     public TAccounts reUpdate(AccountReUpdateServiceInput input) throws FirebaseAuthException, GoenNotFoundException {
         accountRepository.save(input.toRepo());
+        return accountRepository.selectByUid(input.getAccount().getUid())
+                .orElseThrow(
+                        () -> {
+                            Map<String, String> param = new LinkedHashMap<>();
+                            param.put("uid: ", input.getAccount().getUid());
+                            return new GoenNotFoundException("goal detail info no found", param);
+                        }
+                );
+    }
+
+    public TAccounts upload(AccountUploadServiceInput input) throws GoenNotFoundException {
+        accountRepository.save(input.updateData());
         return accountRepository.selectByUid(input.getAccount().getUid())
                 .orElseThrow(
                         () -> {
