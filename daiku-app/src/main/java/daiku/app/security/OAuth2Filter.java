@@ -51,8 +51,6 @@ public class OAuth2Filter extends OncePerRequestFilter {
             String email = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("email");
             if(!request.getRequestURI().equals("/api/account/create")) {
                 String accountType = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("account_type");
-                System.out.println("にゃーおにゃーお");
-                System.out.println(accountType);
                 user = userDetailsService.loadUserByUsername(uid);
                 if(accountType == null) {
                     handleAccountTypeError(response);
