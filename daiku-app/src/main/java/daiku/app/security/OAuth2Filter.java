@@ -1,7 +1,7 @@
 package daiku.app.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import daiku.app.app.service.GoenUserDetailsService;
+import daiku.app.service.GoenUserDetailsService;
 import daiku.domain.infra.entity.ErrorResponse;
 import daiku.domain.infra.entity.GoenUserDetails;
 import daiku.domain.infra.entity.TAccounts;
