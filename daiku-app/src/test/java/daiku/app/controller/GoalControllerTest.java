@@ -76,13 +76,34 @@ public class GoalControllerTest extends  ControllerBaseTest{
     }
 
     @ParameterizedTest
-    @CsvSource({", test aim, test purpose, 2022-09-30"})
+    @CsvSource({", test aim, test purpose, 2099-09-30"})
     void goal_create_不正パラメータ_title(String title, String aim, String purpose, LocalDate dueDate) throws Exception {
         var request = GoalCreateParam.builder()
                 .title(title)
                 .aim(aim)
                 .purpose(purpose)
                 .dueDate(dueDate).build();
+
+        String content = objectMapper.writeValueAsString(request);
+
+        RequestBuilder build = MockMvcRequestBuilders.post("/api/goal/create")
+                .with(daikuPrincipal())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        mockMvc.perform(build)
+                .andExpect(status().is4xxClientError());
+
+    }
+
+    @ParameterizedTest
+    @CsvSource({"test title, test aim, test purpose"})
+    void goal_create_不正パラメータ_dueDate(String title, String aim, String purpose) throws Exception {
+        var request = GoalCreateParam.builder()
+                .title(title)
+                .aim(aim)
+                .purpose(purpose)
+                .dueDate(LocalDate.now().minusDays(1)).build();
 
         String content = objectMapper.writeValueAsString(request);
 

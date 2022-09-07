@@ -6,11 +6,19 @@ import daiku.domain.infra.entity.TAccounts;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Value
 @Builder
 public class AccountCreateParam {
+    @NotNull
+    @Size(max = 100)
     String familyName;
+    @NotNull
+    @Size(max = 100)
     String givenName;
+    @Size(max = 100)
     String nickName;
 
     public AccountCreateServiceInput toService(TAccounts account) {

@@ -1,6 +1,7 @@
 package daiku.app.controller.input.goal;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import daiku.app.annotation.FutureFromNow;
 import daiku.app.controller.input.groups.CreateGroups;
 import daiku.app.controller.input.groups.UpdateGroups;
 import daiku.app.service.input.goal.GoalCreateServiceInput;
@@ -26,6 +27,7 @@ public class GoalCreateParam {
     String aim;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @FutureFromNow(groups = {UpdateGroups.class, CreateGroups.class})
     LocalDate dueDate;
 
     public GoalCreateServiceInput toCreateService(Long accountId) {

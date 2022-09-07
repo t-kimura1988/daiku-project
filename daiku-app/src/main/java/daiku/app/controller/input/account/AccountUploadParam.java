@@ -6,12 +6,14 @@ import daiku.domain.infra.enums.AccountImageType;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Value
 @Builder
 public class AccountUploadParam {
     @NotNull
+    @NotEmpty
     String imagePath;
     @NotNull
     AccountImageType imageType;

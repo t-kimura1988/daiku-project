@@ -69,12 +69,12 @@ public class AccountService {
                         () -> {
                             Map<String, String> param = new LinkedHashMap<>();
                             param.put("uid: ", input.getUid());
-                            return new GoenNotFoundException("goal detail info no found", param);
+                            return new GoenNotFoundException("account info no found", param);
                         }
                 )).build();
     }
 
-    public TAccounts delete(AccountDeleteServiceInput input) throws FirebaseAuthException {
+    public TAccounts delete(AccountDeleteServiceInput input) {
         accountRepository.save(input.toRepo());
         return input.toRepo();
     }
@@ -86,7 +86,7 @@ public class AccountService {
                         () -> {
                             Map<String, String> param = new LinkedHashMap<>();
                             param.put("uid: ", input.getAccount().getUid());
-                            return new GoenNotFoundException("goal detail info no found", param);
+                            return new GoenNotFoundException("account info no found", param);
                         }
                 );
     }
@@ -98,7 +98,7 @@ public class AccountService {
                         () -> {
                             Map<String, String> param = new LinkedHashMap<>();
                             param.put("uid: ", input.getAccount().getUid());
-                            return new GoenNotFoundException("goal detail info no found", param);
+                            return new GoenNotFoundException("account info no found", param);
                         }
                 );
     }

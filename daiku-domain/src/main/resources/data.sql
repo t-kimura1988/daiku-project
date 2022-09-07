@@ -1,5 +1,9 @@
 insert into t_accounts (id, family_name, given_name, uid, email, del_flg)
 values (nextval('t_accounts_id_seq'), 'test', 'aaaaaa', 'testuid_111111', 'test@aaa.aaa', '0');
+insert into t_accounts (id, family_name, given_name, uid, email, del_flg)
+values (nextval('t_accounts_id_seq'), 'test', '当アプリの削除', 'testuid_111112', 'test@aaa.aaa', '1');
+insert into t_accounts (id, family_name, given_name, uid, email, del_flg)
+values (nextval('t_accounts_id_seq'), 'test', 'firebase削除連携済み', 'testuid_111113', 'test@aaa.aaa', '2');
 
 insert into t_goals (id, create_date, account_id, title, purpose, aim, due_date, created_by, created_at, updated_at, updated_by)
 values (nextval('t_goals_id_seq'), to_char(current_date , 'yyyy-MM-dd'), 1, 'test_title_1', 'test', 'test', null, null, current_date , current_date , null);

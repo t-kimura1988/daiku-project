@@ -31,21 +31,21 @@ public class AccountController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public TAccounts create(
-            @RequestBody AccountCreateParam param,
+            @RequestBody @Validated AccountCreateParam param,
             @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException {
         return accountService.baseCreate(param.toService(userDetails.account()));
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public TAccounts update(
-            @RequestBody AccountCreateParam param,
+            @RequestBody @Validated AccountCreateParam param,
             @AuthenticationPrincipal GoenUserDetails userDetails) throws GoenNotFoundException {
         return accountService.update(param.toUpdateService(userDetails.account())).toResponse();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public TAccounts delete(
-            @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException {
+            @AuthenticationPrincipal GoenUserDetails userDetails) {
         return accountService.delete(AccountDeleteServiceInput.builder()
                 .account(userDetails.account()).build());
     }

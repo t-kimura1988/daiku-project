@@ -15,9 +15,4 @@ public class AccountDeleteServiceInput {
         account.setDelFlg(DelFlg.DELETED);
         return account;
     }
-
-    public UserRecord.UpdateRequest toFirebaseUser() {
-        return new UserRecord.UpdateRequest(account.getUid())
-                .setDisabled(true);
-    }
 }
