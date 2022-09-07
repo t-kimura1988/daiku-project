@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -25,9 +26,10 @@ public class GoalArchiveCreateParam {
     @NotNull(groups = {CreateGroups.class})
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate createDate;
-    @NotNull
+    @NotNull(groups = {CreateGroups.class, UpdateGroups.class})
+    @NotEmpty(groups = {CreateGroups.class, UpdateGroups.class})
     String thoughts;
-    @NotNull
+    @NotNull(groups = {CreateGroups.class, UpdateGroups.class})
     PublishLevel publish;
 
     public GoalArchiveServiceInput toArchiveService(Long accountId) {

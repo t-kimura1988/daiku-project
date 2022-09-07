@@ -6,8 +6,10 @@ import daiku.domain.exception.GoenIntegrityException;
 import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.infra.entity.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -67,6 +69,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                         .code(HttpStatus.BAD_REQUEST.value())
                         .message(e.getMessage())
                         .errorCd("E0002").build(),
+                null,
+                HttpStatus.BAD_REQUEST,
+                request
+        );
+    }
+
+    @Override
+    public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        return super.handleExceptionInternal(
+                e,
+                ErrorResponse.builder()
+                        .code(HttpStatus.BAD_REQUEST.value())
+                        .message(e.getMessage())
+                        .errorCd("").build(),
                 null,
                 HttpStatus.BAD_REQUEST,
                 request

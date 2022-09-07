@@ -34,8 +34,8 @@ public class GoalController {
     }
 
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    public GoalSearchModel detail(GoalDetailParameter param,
-                                  @AuthenticationPrincipal GoenUserDetails user) {
+    public GoalSearchModel detail(@Validated GoalDetailParameter param,
+                                  @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException {
         return goalService.detail(param.toService(user.account().getId())).toResponse();
     }
 

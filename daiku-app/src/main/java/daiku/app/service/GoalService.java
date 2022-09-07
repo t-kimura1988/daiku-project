@@ -8,6 +8,7 @@ import daiku.domain.infra.entity.TGoalArchive;
 import daiku.domain.infra.entity.TGoals;
 import daiku.domain.infra.enums.PublishLevel;
 import daiku.domain.infra.enums.UpdatingFlg;
+import daiku.domain.infra.model.param.GoalArchiveDaoParam;
 import daiku.domain.infra.model.param.GoalDaoParam;
 import daiku.domain.infra.model.param.ProcessDaoParam;
 import daiku.domain.infra.model.res.GoalSearchModel;
@@ -181,10 +182,16 @@ public class GoalService {
         );
     }
 
-    public GoalDetailServiceOutput detail(GoalDetailServiceInput input) {
+    public GoalDetailServiceOutput detail(GoalDetailServiceInput input) throws GoenNotFoundException {
 
         return GoalDetailServiceOutput.builder()
-                .goal(goalRepository.detail(input.toParam()))
+                .goal(goalRepository.detail(input.toParam()).orElseThrow(
+                        () -> {
+                            Map<String, String> param = new LinkedHashMap<>();
+                            param.put("Goal.id: ", input.getGoalId().toString());
+                            return new GoenNotFoundException("goal detail info no found", param);
+                        }
+                ))
                 .build();
     }
 
@@ -209,10 +216,21 @@ public class GoalService {
                     goalArchiveRepository.save(goalArchive);
                     archive.set(goalArchive);
                 },
-                () -> goalArchiveRepository.save(archive.get()));
+                () -> {
+                    goalArchiveRepository.save(archive.get());
+                });
 
 
-        return archive.get();
+        return goalArchiveRepository.selectById(
+                GoalArchiveDaoParam.builder()
+                        .archiveId(archive.get().getId())
+                        .archiveCreateDate(archive.get().getArchivesCreateDate())
+                        .build())
+                .orElseThrow(() -> {
+                    Map<String, String> param = new LinkedHashMap<>();
+                    param.put("Archive.id", archive.get().getId().toString());
+                    return new GoenNotFoundException("save archive info not found exception", param, "");
+                });
 
     }
 
