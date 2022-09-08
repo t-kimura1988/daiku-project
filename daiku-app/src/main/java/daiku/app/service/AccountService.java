@@ -11,11 +11,13 @@ import daiku.domain.infra.repository.AccountRepository;
 import daiku.domain.infra.repository.FirebaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class AccountService {
     @Autowired
     AccountRepository accountRepository;
