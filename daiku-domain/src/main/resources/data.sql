@@ -53,3 +53,57 @@ insert into t_goal_archives (id, archives_create_date, goal_id, thoughts, updati
 values (nextval('t_goal_archive_id_seq'), to_char(current_date , 'yyyy-MM-dd'), 1, 'thoughts test11', '0', '0', null, current_date, current_date, null);
 insert into t_goal_archives (id, archives_create_date, goal_id, thoughts, updating_flg, publish, created_by, created_at, updated_at, updated_by)
 values (nextval('t_goal_archive_id_seq'), to_char(current_date , 'yyyy-MM-dd'), 1, 'thoughts test12', '0', '0', null, current_date, current_date, null);
+
+
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+insert into t_processes (id, goal_id, account_id, goal_create_date, title, body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), 'process title', 'process body', null, current_date , current_date , null);
+
+
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 1, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 2, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 3, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 4, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 5, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 6, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 7, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 8, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 9, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 10, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 11, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 12, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
+insert into t_processes_history (id, process_id, account_id, goal_create_date, before_priority, priority, before_process_status, process_status, process_start_date, before_process_start_date, process_end_date, before_process_end_date, comment, before_title, before_body, created_by, created_at, updated_at, updated_by)
+values (nextval('t_processes_history_id_seq'), 13, 1, to_char(current_date , 'yyyy-MM-dd'), null, '0', null, '0', '2022-09-08', null, '2022-09-08', null, null, null, null, null, current_date , current_date , null);
