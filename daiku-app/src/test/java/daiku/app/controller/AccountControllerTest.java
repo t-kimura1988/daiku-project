@@ -14,11 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Transactional
 public class AccountControllerTest extends ControllerBaseTest{
     @Autowired
     private MockMvc mockMvc;
@@ -82,6 +84,8 @@ public class AccountControllerTest extends ControllerBaseTest{
 
         String content = objectMapper.writeValueAsString(request);
 
+        doNothing().when(firebaseRepository).accountClaims(any());
+
         RequestBuilder build = MockMvcRequestBuilders.post("/api/account/create")
                 .with(nonExitAccount())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -89,24 +93,6 @@ public class AccountControllerTest extends ControllerBaseTest{
 
         mockMvc.perform(build)
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    void account_create_アカウント種別不正() throws Exception {
-        var request = AccountCreateParam.builder()
-                .familyName("test")
-                .givenName("test")
-                .nickName("test").build();
-
-        String content = objectMapper.writeValueAsString(request);
-
-        RequestBuilder build = MockMvcRequestBuilders.post("/api/account/create")
-                .with(unAuthorizationAccountType())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-
-        mockMvc.perform(build)
-                .andExpect(status().is4xxClientError());
     }
 
     @ParameterizedTest
@@ -144,7 +130,7 @@ public class AccountControllerTest extends ControllerBaseTest{
         doNothing().when(firebaseRepository).accountClaims(any());
 
         RequestBuilder build = MockMvcRequestBuilders.post("/api/account/create")
-                .with(nonExitAccount())
+                .with(nothingDaikuPrincipal())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
 
@@ -259,7 +245,7 @@ public class AccountControllerTest extends ControllerBaseTest{
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(build)
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -288,7 +274,7 @@ public class AccountControllerTest extends ControllerBaseTest{
     void account_re_update_authorization_正常() throws Exception {
 
         RequestBuilder build = MockMvcRequestBuilders.post("/api/account/re-update")
-                .with(daikuPrincipal())
+                .with(delAccount())
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(build)
@@ -369,6 +355,6 @@ public class AccountControllerTest extends ControllerBaseTest{
                 .content(content);
 
         mockMvc.perform(build)
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isOk());
     }
 }

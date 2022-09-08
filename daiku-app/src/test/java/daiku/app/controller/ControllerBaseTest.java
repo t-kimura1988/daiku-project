@@ -72,4 +72,14 @@ public class ControllerBaseTest {
         return jwt().jwt(jwt);
     }
 
+    protected SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor nothingDaikuPrincipal() {
+        Jwt jwt = Jwt.withTokenValue("token")
+                .header("alg", "none")
+                .claim("scope", "message:read")
+                .claim("user_id", "testuid_911111")
+                .claim("email", "aaaaa9@aaa.aaa")
+                .build();
+        return jwt().jwt(jwt);
+    }
+
 }
