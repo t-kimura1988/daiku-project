@@ -8,6 +8,7 @@ import daiku.domain.infra.model.res.ProcessHistorySearchModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class ProcessHistoryController {
 
     @PostMapping("/create")
     public ProcessHistorySearchModel create(
-            @RequestBody ProcessHistoryCreateParam param,
+            @RequestBody @Validated ProcessHistoryCreateParam param,
             @AuthenticationPrincipal GoenUserDetails user
     ) throws GoenNotFoundException {
         return processHistoryService.create(param.toService(user.account().getId()));
@@ -43,7 +44,7 @@ public class ProcessHistoryController {
 
     @PostMapping("/update/comment")
     public ProcessHistorySearchModel updateComment(
-            @RequestBody ProcessHistoryUpdateCommentParam param,
+            @RequestBody @Validated ProcessHistoryUpdateCommentParam param,
             @AuthenticationPrincipal GoenUserDetails user
             ) throws GoenNotFoundException{
         return processHistoryService.updateComment(param.toService(user.account().getId()));
@@ -51,7 +52,7 @@ public class ProcessHistoryController {
 
     @PostMapping("/update/status")
     public ProcessHistorySearchModel updateStatus(
-            @RequestBody ProcessHistoryUpdateStatusParam param,
+            @RequestBody @Validated ProcessHistoryUpdateStatusParam param,
             @AuthenticationPrincipal GoenUserDetails user
     ) throws GoenNotFoundException {
         return processHistoryService.updateStatus(param.toService(user.account().getId()));

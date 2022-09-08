@@ -6,9 +6,12 @@ import daiku.domain.infra.enums.ProcessStatus;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.NotNull;
+
 @Value
 @Builder
 public class ProcessHistoryCreateParam {
+    @NotNull
     Long processId;
     String comment;
     ProcessStatus processStatus;

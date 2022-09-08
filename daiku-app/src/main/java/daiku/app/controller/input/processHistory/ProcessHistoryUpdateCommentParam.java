@@ -4,10 +4,16 @@ import daiku.app.service.input.processHistory.ProcessHistoryUpdateCommentService
 import lombok.Builder;
 import lombok.Value;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Value
 @Builder
 public class ProcessHistoryUpdateCommentParam {
+    @NotNull
     Long processHistoryId;
+    @NotNull
+    @NotEmpty
     String comment;
 
     public ProcessHistoryUpdateCommentServiceInput toService(Long accountId) {
