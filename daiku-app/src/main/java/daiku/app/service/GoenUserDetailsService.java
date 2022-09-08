@@ -2,6 +2,7 @@ package daiku.app.service;
 
 import daiku.domain.infra.entity.GoenUserDetails;
 import daiku.domain.infra.entity.TAccounts;
+import daiku.domain.infra.enums.DelFlg;
 import daiku.domain.infra.repository.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class GoenUserDetailsService implements UserDetailsService {
         }
         TAccounts account = accountRepository.selectByUid(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user info is empty"));
+
+        if(DelFlg.FIREBASE_DELETED.equals(account.getDelFlg())) {
+            log.error("アカウント削除情報はFirebaseに連携済み");
+            throw new UsernameNotFoundException("already firebase account delete");
+        }
+
         return new GoenUserDetails(
                 username,
                 account,

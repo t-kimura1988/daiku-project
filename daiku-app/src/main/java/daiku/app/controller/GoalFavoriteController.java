@@ -9,6 +9,7 @@ import daiku.domain.infra.model.res.GoalFavoriteSearchModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class GoalFavoriteController {
 
     @PostMapping("/change")
     public void favoriteCreate(
-            @RequestBody GoalFavoriteCreateParam param,
+            @RequestBody @Validated GoalFavoriteCreateParam param,
             @AuthenticationPrincipal GoenUserDetails user
             ) throws GoenNotFoundException {
         goalFavoriteService.create(param.toService(user.account().getId()));
