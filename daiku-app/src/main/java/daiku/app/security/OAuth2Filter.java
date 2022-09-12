@@ -8,6 +8,7 @@ import daiku.domain.infra.entity.TAccounts;
 import daiku.domain.infra.enums.AccountType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -34,6 +35,9 @@ public class OAuth2Filter extends OncePerRequestFilter {
     @Autowired
     private GoenUserDetailsService userDetailsService;
 
+    @Value("${api.apiKey.spocIos: test}")
+    private String iosApiKey;
+
     public OAuth2Filter(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
@@ -48,6 +52,11 @@ public class OAuth2Filter extends OncePerRequestFilter {
             UserDetails user = null;
             String uid = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("user_id");
             String email = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("email");
+            String apiKey = request.getHeader("X-SPOC-API-KEY");
+//            if(apiKey == null || !iosApiKey.equals(apiKey)) {
+//                handleApiKeyError(response);
+//                return;
+//            }
             if(!request.getRequestURI().equals("/api/account/create")) {
                 String accountType = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("account_type");
                 user = userDetailsService.loadUserByUsername(uid);
@@ -76,6 +85,19 @@ public class OAuth2Filter extends OncePerRequestFilter {
                 .errorCd("E0003")
                 .code(HttpStatus.UNAUTHORIZED.value())
                 .message("アカウント種別が不正です").build();
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+
+    }
+
+    private void handleApiKeyError(HttpServletResponse response) throws IOException {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCd("E0006")
+                .code(HttpStatus.UNAUTHORIZED.value())
+                .message("Api Keyが不正です").build();
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
