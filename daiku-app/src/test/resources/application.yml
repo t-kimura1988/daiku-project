@@ -1,5 +1,5 @@
 doma:
-  dialect: POSTGRES
+  dialect: h2
   sql-file-reposiotry: GREEDY_CACHE
   naming: SNAKE_UPPER_CASE
   max-rows: 1000

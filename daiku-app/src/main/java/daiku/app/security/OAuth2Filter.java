@@ -1,10 +1,11 @@
 package daiku.app.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import daiku.app.app.service.GoenUserDetailsService;
+import daiku.app.service.GoenUserDetailsService;
 import daiku.domain.infra.entity.ErrorResponse;
 import daiku.domain.infra.entity.GoenUserDetails;
 import daiku.domain.infra.entity.TAccounts;
+import daiku.domain.infra.enums.AccountType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,16 +44,14 @@ public class OAuth2Filter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
         SecurityContext context = SecurityContextHolder.getContext();
-
         if(Objects.nonNull(context.getAuthentication()) && context.getAuthentication().getPrincipal() instanceof Jwt) {
-
             UserDetails user = null;
             String uid = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("user_id");
             String email = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("email");
             if(!request.getRequestURI().equals("/api/account/create")) {
                 String accountType = ((Jwt) context.getAuthentication().getPrincipal()).getClaimAsString("account_type");
                 user = userDetailsService.loadUserByUsername(uid);
-                if(accountType == null) {
+                if(accountType == null || Objects.isNull(AccountType.of(accountType))) {
                     handleAccountTypeError(response);
                     return;
                 }
