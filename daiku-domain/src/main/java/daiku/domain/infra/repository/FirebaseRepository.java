@@ -22,8 +22,6 @@ public class FirebaseRepository {
 
     public void deleteAccount(String uid) throws FirebaseAuthException {
 
-//        client.auth().updateUser(new UserRecord.UpdateRequest(uid)
-//                .setDisabled(true));
         client.auth().deleteUser(uid);
     }
 
@@ -37,5 +35,6 @@ public class FirebaseRepository {
         claims.put("account_type", AccountType.GENERAL.getValue());
         client.auth().setCustomUserClaims(uid, claims);
     }
+
 
 }
