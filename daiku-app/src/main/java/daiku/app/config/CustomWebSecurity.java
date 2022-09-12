@@ -14,6 +14,7 @@ public class CustomWebSecurity extends WebSecurityConfigurerAdapter {
     private OAuth2Filter oAuth2Filter;
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/actuator/**").permitAll().anyRequest().authenticated()
                 .and()
