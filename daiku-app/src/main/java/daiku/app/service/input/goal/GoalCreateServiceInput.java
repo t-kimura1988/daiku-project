@@ -14,6 +14,7 @@ public class GoalCreateServiceInput {
     String aim;
     Long accountId;
     LocalDate dueDate;
+    Long makiId;
 
     public TGoals toEntity() {
         var goals = new TGoals();

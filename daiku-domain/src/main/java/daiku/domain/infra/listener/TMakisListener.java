@@ -1,7 +1,7 @@
 package daiku.domain.infra.listener;
 
 import daiku.domain.infra.entity.GoenUserDetails;
-import daiku.domain.infra.entity.TProcesses;
+import daiku.domain.infra.entity.TMakis;
 import lombok.val;
 import org.seasar.doma.jdbc.entity.EntityListener;
 import org.seasar.doma.jdbc.entity.PreInsertContext;
@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
 
-public class TProcessesListener<E extends TProcesses> implements EntityListener<E> {
+public class TMakisListener<E extends TMakis> implements EntityListener<E> {
 
     @Override
     public void preInsert(E entity, PreInsertContext<E> context) {

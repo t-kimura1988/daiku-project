@@ -21,6 +21,7 @@ public class GoalCreateParam {
     Long goalId;
     @NotNull(groups = UpdateGroups.class)
     LocalDate createDate;
+    Long makiId;
     @NotEmpty(groups = {UpdateGroups.class, CreateGroups.class})
     String title;
     String purpose;
@@ -36,6 +37,7 @@ public class GoalCreateParam {
                 .purpose(purpose)
                 .aim(aim)
                 .dueDate(dueDate)
+                .makiId(makiId)
                 .accountId(accountId).build();
     }
 
