@@ -23,6 +23,14 @@ CREATE SEQUENCE IF NOT EXISTS t_goal_archive_id_seq
     maxvalue 999999999;
 COMMENT ON SEQUENCE t_goal_archive_id_seq IS 'goal archive table id sequence';
 
+CREATE SEQUENCE IF NOT EXISTS t_makis_id_seq
+    maxvalue 999999999;
+COMMENT ON SEQUENCE t_makis_id_seq IS 'makis table id sequence';
+
+CREATE SEQUENCE IF NOT EXISTS t_maki_goal_relation_id_seq
+    maxvalue 999999999;
+COMMENT ON SEQUENCE t_maki_goal_relation_id_seq IS 'maki_goal_relation table id sequence';
+
 CREATE TABLE IF NOT EXISTS t_accounts
 (
     id          NUMERIC      NOT NULL CONSTRAINT t_account_pk PRIMARY KEY,
@@ -155,3 +163,38 @@ CREATE TABLE IF NOT EXISTS t_goal_archives
 CREATE UNIQUE INDEX IF NOT EXISTS ix_goal_archives_1
     ON t_goal_archives(id, archives_create_date)
 ;
+
+CREATE TABLE IF NOT EXISTS t_makis
+(
+    id                NUMERIC NOT NULL,
+    account_id        NUMERIC NOT NULL,
+    maki_title        VARCHAR(255) NOT NULL,
+    maki_key          VARCHAR(100),
+    maki_desc         TEXT,
+    created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by        NUMERIC,
+    updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by        NUMERIC
+    )
+;
+ALTER TABLE t_makis ADD CONSTRAINT pk_makis PRIMARY KEY (id)
+;
+
+CREATE TABLE IF NOT EXISTS t_maki_goal_relation
+(
+    id                NUMERIC NOT NULL,
+    maki_id           NUMERIC NOT NULL,
+    goal_id           NUMERIC NOT NULL,
+    sort_num          NUMERIC NOT NULL,
+    goal_create_date  DATE DEFAULT CURRENT_DATE,
+    created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by        NUMERIC,
+    updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by        NUMERIC
+)
+;
+
+CREATE UNIQUE INDEX IF NOT EXISTS ix_maki_goal_relation_1
+    ON t_maki_goal_relation(id, maki_id, goal_id, goal_create_date)
+;
+

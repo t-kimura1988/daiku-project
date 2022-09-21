@@ -152,7 +152,7 @@ public class GoalService {
         TGoals goals = input.toEntity();
         goalRepository.save(goals);
 
-        if(input.getMakiId() != 0L) {
+        if(input.getMakiId() != null && input.getMakiId() != 0L) {
             var maxNum = makiGoalRepository.makiGoalRelationSortNumMax(input.getMakiId());
 
             if(maxNum == null) {
