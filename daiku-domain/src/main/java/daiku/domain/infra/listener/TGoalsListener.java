@@ -1,7 +1,6 @@
 package daiku.domain.infra.listener;
 
 import daiku.domain.infra.entity.GoenUserDetails;
-import daiku.domain.infra.entity.TGoalArchive;
 import daiku.domain.infra.entity.TGoals;
 import lombok.val;
 import org.seasar.doma.jdbc.entity.EntityListener;
@@ -16,8 +15,11 @@ public class TGoalsListener<E extends TGoals> implements EntityListener<E> {
     @Override
     public void preInsert(E entity, PreInsertContext<E> context) {
         val timestamp = LocalDateTime.now();
+        var account = (GoenUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        entity.setCreatedBy(account.account().getId());
         entity.setCreatedAt(timestamp);
         entity.setUpdatedAt(timestamp);
+        entity.setUpdatedBy(account.account().getId());
     }
 
     @Override

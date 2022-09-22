@@ -2,8 +2,9 @@ package daiku.domain.infra.repository;
 
 import daiku.domain.infra.dao.GoalDao;
 import daiku.domain.infra.entity.TGoals;
+import daiku.domain.infra.model.param.AddGoalListParam;
 import daiku.domain.infra.model.param.GoalDaoParam;
-import daiku.domain.infra.model.res.GoalArchiveSearchModel;
+import daiku.domain.infra.model.res.GoalAddListItemModel;
 import daiku.domain.infra.model.res.GoalSearchModel;
 import daiku.domain.infra.utils.CollectorUtil;
 import org.seasar.doma.jdbc.SelectOptions;
@@ -30,6 +31,10 @@ public class GoalRepository  {
 
     public Long selectGoalCount(LocalDate createDate) {
         return goalDao.selectCount(createDate);
+    }
+
+    public List<GoalAddListItemModel> addGoalList(AddGoalListParam param) {
+        return goalDao.selectAddGoalList(param, SelectOptions.get(), toList());
     }
 
     public void save(TGoals goals) {
