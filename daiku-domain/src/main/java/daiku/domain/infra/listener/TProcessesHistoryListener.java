@@ -15,8 +15,11 @@ public class TProcessesHistoryListener<E extends TProcessesHistory> implements E
     @Override
     public void preInsert(E entity, PreInsertContext<E> context) {
         val timestamp = LocalDateTime.now();
+        var account = (GoenUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        entity.setCreatedBy(account.account().getId());
         entity.setCreatedAt(timestamp);
         entity.setUpdatedAt(timestamp);
+        entity.setUpdatedBy(account.account().getId());
     }
 
     @Override

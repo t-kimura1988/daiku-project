@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-public class GoalSearchModel {
+public class GoalAddListItemModel {
     private Long id;
     private LocalDate createDate;
     private Long accountId;
@@ -24,6 +24,4 @@ public class GoalSearchModel {
     private LocalDate archivesCreateDate;
     private UpdatingFlg updatingFlg;
     private Long makiRelationId;
-    private Long sortNum;
-    private String makiKey;
 }

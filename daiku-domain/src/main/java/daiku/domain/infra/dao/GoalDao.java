@@ -1,8 +1,9 @@
 package daiku.domain.infra.dao;
 
 import daiku.domain.infra.entity.TGoals;
-import daiku.domain.infra.model.param.GoalArchiveDaoParam;
+import daiku.domain.infra.model.param.AddGoalListParam;
 import daiku.domain.infra.model.param.GoalDaoParam;
+import daiku.domain.infra.model.res.GoalAddListItemModel;
 import daiku.domain.infra.model.res.GoalSearchModel;
 import org.seasar.doma.*;
 import org.seasar.doma.boot.ConfigAutowireable;
@@ -17,6 +18,9 @@ public interface GoalDao {
 
     @Select(strategy = SelectType.COLLECT)
     <R> R select(GoalDaoParam param, SelectOptions options,  Collector<GoalSearchModel, ?, R> collector);
+
+    @Select(strategy = SelectType.COLLECT)
+    <R> R selectAddGoalList(AddGoalListParam param, SelectOptions options, Collector<GoalAddListItemModel, ?, R> collector);
 
     @Select
     Long selectCount(LocalDate createDate);

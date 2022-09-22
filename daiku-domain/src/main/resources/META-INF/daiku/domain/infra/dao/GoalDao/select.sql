@@ -12,7 +12,10 @@ select
     f.id as favorite_id,
     ga.id as archive_id,
     ga.archives_create_date,
-    ga.updating_flg
+    ga.updating_flg,
+    mgr.id as maki_relation_id,
+    mgr.sort_num,
+    mk.maki_key
 from
     t_goals g
 inner join
@@ -21,6 +24,10 @@ left join
         t_goal_favorites f on g.id = f.goal_id and f.account_id = a.id
 left join
         t_goal_archives ga on g.id = ga.goal_id
+left join
+        t_maki_goal_relation mgr on mgr.goal_id = g.id
+left join
+        t_makis mk on mk.id = mgr.maki_id
 where
 /*%if param.olderThan */true
     g.create_date < /* param.fromCreateDate */'2022-01-01'

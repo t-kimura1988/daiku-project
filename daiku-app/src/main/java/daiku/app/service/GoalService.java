@@ -6,6 +6,7 @@ import daiku.domain.exception.GoenIntegrityException;
 import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.infra.entity.TGoalArchive;
 import daiku.domain.infra.entity.TGoals;
+import daiku.domain.infra.entity.TMakiGoalRelation;
 import daiku.domain.infra.enums.PublishLevel;
 import daiku.domain.infra.enums.UpdatingFlg;
 import daiku.domain.infra.model.param.GoalArchiveDaoParam;
@@ -15,6 +16,7 @@ import daiku.domain.infra.model.res.GoalSearchModel;
 import daiku.domain.infra.model.res.ProcessSearchModel;
 import daiku.domain.infra.repository.GoalArchiveRepository;
 import daiku.domain.infra.repository.GoalRepository;
+import daiku.domain.infra.repository.MakiGoalRepository;
 import daiku.domain.infra.repository.ProcessRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class GoalService {
 
     @Autowired
     ProcessRepository processRepository;
+
+    @Autowired
+    MakiGoalRepository makiGoalRepository;
 
     public GoalSearchServiceOutput search(GoalSearchServiceInput input) {
         var goalList = goalRepository.search(input.toRepository());
@@ -146,6 +151,22 @@ public class GoalService {
     public GoalSearchModel create(GoalCreateServiceInput input) throws GoenNotFoundException{
         TGoals goals = input.toEntity();
         goalRepository.save(goals);
+
+        if(input.getMakiId() != null && input.getMakiId() != 0L) {
+            var maxNum = makiGoalRepository.makiGoalRelationSortNumMax(input.getMakiId());
+
+            if(maxNum == null) {
+                maxNum = 1L;
+            } else {
+                maxNum++;
+            }
+            TMakiGoalRelation makiGoal = new TMakiGoalRelation();
+            makiGoal.setGoalId(goals.getId());
+            makiGoal.setMakiId(input.getMakiId());
+            makiGoal.setSortNum(maxNum);
+            makiGoal.setGoalCreateDate(goals.getCreateDate());
+            makiGoalRepository.save(makiGoal);
+        }
 
         return goalRepository.detail(GoalDaoParam.builder()
                 .goalId(goals.getId())
