@@ -173,7 +173,8 @@ public class GoalControllerTest extends  ControllerBaseTest{
                 .with(daikuPrincipal())
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("page", "10")
-                .param("year", StringUtils.nullSafeToString(LocalDate.now().getYear()));
+                .param("year", StringUtils.nullSafeToString(LocalDate.now().getYear()))
+                .param("month", StringUtils.nullSafeToString(LocalDate.now().getMonth().getValue()));
 
         var res = mockMvc.perform(build)
                 .andExpect(status().isOk())
@@ -642,7 +643,8 @@ public class GoalControllerTest extends  ControllerBaseTest{
                 .with(daikuPrincipal())
                 .contentType(MediaType.APPLICATION_JSON)
                 .param("page", "10")
-                .param("year", StringUtils.nullSafeToString(LocalDate.now().getYear()));
+                .param("year", StringUtils.nullSafeToString(LocalDate.now().getYear()))
+                .param("month", StringUtils.nullSafeToString(LocalDate.now().getMonth().getValue()));
 
         var res = mockMvc.perform(build)
                 .andExpect(status().isOk())
@@ -678,7 +680,8 @@ public class GoalControllerTest extends  ControllerBaseTest{
         RequestBuilder build = MockMvcRequestBuilders.get("/api/goal/my-archive/list")
                 .with(unAuthorizationAccountType())
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("year", StringUtils.nullSafeToString(LocalDate.now().getYear()));
+                .param("year", StringUtils.nullSafeToString(LocalDate.now().getYear()))
+                .param("month", StringUtils.nullSafeToString(LocalDate.now().getMonth().getValue()));
 
         var res = mockMvc.perform(build)
                 .andExpect(status().is4xxClientError())
@@ -692,7 +695,8 @@ public class GoalControllerTest extends  ControllerBaseTest{
         RequestBuilder build = MockMvcRequestBuilders.get("/api/goal/my-archive/list")
                 .with(daikuPrincipal())
                 .contentType(MediaType.APPLICATION_JSON)
-                .param("year", StringUtils.nullSafeToString(LocalDate.now().getYear()));
+                .param("year", StringUtils.nullSafeToString(LocalDate.now().getYear()))
+                .param("month", StringUtils.nullSafeToString(LocalDate.now().getMonth().getValue()));
 
         var res = mockMvc.perform(build)
                 .andExpect(status().isOk())
