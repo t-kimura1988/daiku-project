@@ -4,6 +4,7 @@ import daiku.app.service.input.goal.MyGoalArchiveSearchServiceInput;
 import lombok.Builder;
 import lombok.Value;
 
+import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
@@ -11,6 +12,7 @@ import java.time.YearMonth;
 @Builder
 public class MyGoalArchiveSearchParameter {
     int year;
+    @Nullable
     int month;
 
     public MyGoalArchiveSearchServiceInput toService(Long accountId) {
