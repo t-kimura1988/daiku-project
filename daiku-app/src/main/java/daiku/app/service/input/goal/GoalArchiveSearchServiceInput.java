@@ -18,6 +18,8 @@ public class GoalArchiveSearchServiceInput {
         return GoalArchiveDaoParam.builder()
                 .accountId(accountId)
                 .page(page)
+                .fromCreateDate(fromDate)
+                .toCreateDate(toDate)
                 .build();
     }
 }

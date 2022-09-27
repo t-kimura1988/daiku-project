@@ -27,9 +27,8 @@ public class GoalController {
     @Autowired
     private GoalService goalService;
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @GetMapping(value = "/search")
     public List<GoalSearchModel> search(GoalSearchParameter param, @AuthenticationPrincipal GoenUserDetails user) {
-        log.info("goal controller start");
         return goalService.search(param.toService(user.account().getId())).toResponse();
     }
 
