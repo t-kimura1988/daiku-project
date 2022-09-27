@@ -16,6 +16,8 @@ public class MyGoalArchiveSearchServiceInput {
     public GoalArchiveDaoParam toRepository() {
         return GoalArchiveDaoParam.builder()
                 .accountId(accountId)
+                .fromCreateDate(fromDate)
+                .toCreateDate(toDate)
                 .build();
     }
 }

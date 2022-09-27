@@ -29,3 +29,10 @@ and
 and
     ga.archives_create_date = /* param.archiveCreateDate */0
 /*%end*/
+/*%if param.fromCreateDate != null && param.toCreateDate != null */
+  and
+    ga.archives_create_date between /* param.fromCreateDate */'2022-01-01' and /* param.toCreateDate */'2022-01-01'
+/*%end*/
+/*%if param.page != 0 */
+    limit /* param.page */10
+/*%end*/
