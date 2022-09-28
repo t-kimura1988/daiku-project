@@ -1,6 +1,6 @@
 package daiku.app.service.output.goal;
 
-import daiku.domain.infra.model.res.GoalSearchModel;
+import daiku.domain.model.res.GoalSearchModel;
 import lombok.Builder;
 import lombok.Value;
 

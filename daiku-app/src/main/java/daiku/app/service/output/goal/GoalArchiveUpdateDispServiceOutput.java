@@ -1,6 +1,6 @@
 package daiku.app.service.output.goal;
 
-import daiku.domain.infra.entity.TGoalArchive;
+import daiku.domain.entity.TGoalArchive;
 import lombok.Builder;
 import lombok.Value;
 

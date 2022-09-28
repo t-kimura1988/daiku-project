@@ -1,6 +1,6 @@
 package daiku.app.service.input.account;
 
-import daiku.domain.infra.entity.TAccounts;
+import daiku.domain.entity.TAccounts;
 import lombok.Builder;
 import lombok.Value;
 

@@ -1,9 +1,9 @@
 package daiku.app.service.output.goal;
 
 import daiku.app.controller.output.GoalArchiveDetailResponse;
-import daiku.domain.infra.model.res.GoalArchiveSearchModel;
-import daiku.domain.infra.model.res.GoalSearchModel;
-import daiku.domain.infra.model.res.ProcessSearchModel;
+import daiku.domain.model.res.GoalArchiveSearchModel;
+import daiku.domain.model.res.GoalSearchModel;
+import daiku.domain.model.res.ProcessSearchModel;
 import lombok.Builder;
 import lombok.Value;
 

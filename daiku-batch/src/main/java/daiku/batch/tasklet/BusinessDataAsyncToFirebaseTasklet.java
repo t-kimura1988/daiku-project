@@ -1,8 +1,6 @@
 package daiku.batch.tasklet;
 
 import daiku.batch.service.BusinessDataAsyncToFirebaseService;
-import daiku.domain.infra.model.param.firestore.BusinessDataAsync;
-import daiku.domain.infra.repository.FirebaseRepository;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;

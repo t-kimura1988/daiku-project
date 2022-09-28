@@ -1,6 +1,6 @@
 package daiku.app.service.output.processHistory;
 
-import daiku.domain.infra.model.res.ProcessHistorySearchModel;
+import daiku.domain.model.res.ProcessHistorySearchModel;
 import lombok.Builder;
 import lombok.Value;
 

@@ -1,8 +1,8 @@
 package daiku.app.service.input.account;
 
 import daiku.domain.exception.GoenNotFoundException;
-import daiku.domain.infra.entity.TAccounts;
-import daiku.domain.infra.enums.DelFlg;
+import daiku.domain.entity.TAccounts;
+import daiku.domain.enums.DelFlg;
 import lombok.Builder;
 import lombok.Value;
 

@@ -1,6 +1,6 @@
 package daiku.app.service.output.maki;
 
-import daiku.domain.infra.entity.TMakiGoalRelation;
+import daiku.domain.entity.TMakiGoalRelation;
 import lombok.Builder;
 import lombok.Value;
 

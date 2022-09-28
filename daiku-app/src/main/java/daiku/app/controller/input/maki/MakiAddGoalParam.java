@@ -1,6 +1,6 @@
 package daiku.app.controller.input.maki;
 
-import daiku.domain.infra.entity.TMakiGoalRelation;
+import daiku.domain.entity.TMakiGoalRelation;
 import lombok.Builder;
 import lombok.Value;
 import org.springframework.format.annotation.DateTimeFormat;

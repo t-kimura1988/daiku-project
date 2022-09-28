@@ -1,5 +1,6 @@
 package daiku.batch.config;
 
+import daiku.batch.tasklet.BusinessDataAsyncToFirebaseTasklet;
 import daiku.batch.tasklet.FirebaseDisableAccountTasklet;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -21,6 +22,9 @@ public class FirebaseDisableAccountConfig {
 
     @Autowired
     private FirebaseDisableAccountTasklet firebaseAccountDeleteTasklet;
+
+    @Autowired
+    private BusinessDataAsyncToFirebaseTasklet businessDataAsyncToFirebaseTasklet;
 
     @Autowired
     private JobLauncher jobLauncher;

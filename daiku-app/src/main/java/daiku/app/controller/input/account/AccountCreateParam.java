@@ -2,7 +2,7 @@ package daiku.app.controller.input.account;
 
 import daiku.app.service.input.account.AccountCreateServiceInput;
 import daiku.app.service.input.account.AccountUpdateServiceInput;
-import daiku.domain.infra.entity.TAccounts;
+import daiku.domain.entity.TAccounts;
 import lombok.Builder;
 import lombok.Value;
 

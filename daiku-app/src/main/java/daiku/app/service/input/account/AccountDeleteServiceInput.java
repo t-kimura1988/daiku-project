@@ -1,8 +1,7 @@
 package daiku.app.service.input.account;
 
-import com.google.firebase.auth.UserRecord;
-import daiku.domain.infra.entity.TAccounts;
-import daiku.domain.infra.enums.DelFlg;
+import daiku.domain.entity.TAccounts;
+import daiku.domain.enums.DelFlg;
 import lombok.Builder;
 import lombok.Value;
 
