@@ -1,10 +1,10 @@
 package daiku.batch.service;
 
 import com.google.firebase.auth.FirebaseAuthException;
-import daiku.domain.infra.enums.DelFlg;
-import daiku.domain.infra.repository.AccountRepository;
-import daiku.domain.infra.repository.FirebaseRepository;
-import daiku.domain.infra.repository.GoalRepository;
+import daiku.domain.enums.DelFlg;
+import daiku.domain.repository.AccountRepository;
+import daiku.domain.repository.FirebaseRepository;
+import daiku.domain.repository.GoalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package daiku.app.service.input.processHistory;
 
-import daiku.domain.infra.model.param.ProcessHistoryDaoParam;
+import daiku.domain.model.param.ProcessHistoryDaoParam;
 import lombok.Builder;
 import lombok.Value;
 

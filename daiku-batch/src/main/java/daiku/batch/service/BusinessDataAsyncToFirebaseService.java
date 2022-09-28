@@ -1,9 +1,10 @@
 package daiku.batch.service;
 
-import daiku.domain.infra.model.param.firestore.BusinessDataAsync;
-import daiku.domain.infra.repository.AccountRepository;
-import daiku.domain.infra.repository.FirebaseRepository;
-import daiku.domain.infra.repository.GoalRepository;
+import daiku.domain.model.param.firestore.BusinessDataAsync;
+import daiku.domain.repository.AccountRepository;
+import daiku.domain.repository.FirebaseRepository;
+import daiku.domain.repository.GoalArchiveRepository;
+import daiku.domain.repository.GoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,14 @@ public class BusinessDataAsyncToFirebaseService {
     @Autowired
     private GoalRepository goalRepository;
 
+    @Autowired
+    private GoalArchiveRepository goalArchiveRepository;
+
     public void asyncBusinessDataFirebase() {
         firebaseRepository.asyncBusinessData(BusinessDataAsync.builder()
                 .accountCount(accountRepository.accountCount())
-                .goalCount(goalRepository.selectGoalCount(LocalDate.now())).build());
+                .goalCount(goalRepository.selectGoalCount(LocalDate.now()))
+                .goalArchiveCount(goalArchiveRepository.selectGoalArchiveCount(LocalDate.now())).build());
 
     }
 }

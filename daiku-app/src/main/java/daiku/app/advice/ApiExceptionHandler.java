@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuthException;
 import daiku.domain.exception.GoenBadRequestException;
 import daiku.domain.exception.GoenIntegrityException;
 import daiku.domain.exception.GoenNotFoundException;
-import daiku.domain.infra.entity.ErrorResponse;
+import daiku.domain.entity.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package daiku.app.service.output.maki;
 
-import daiku.domain.infra.model.res.MakiSearchModel;
+import daiku.domain.model.res.MakiSearchModel;
 import lombok.Builder;
 import lombok.Value;
 

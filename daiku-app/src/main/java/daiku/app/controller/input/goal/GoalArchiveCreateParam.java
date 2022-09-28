@@ -4,7 +4,7 @@ import daiku.app.controller.input.groups.CreateGroups;
 import daiku.app.controller.input.groups.UpdateGroups;
 import daiku.app.service.input.goal.GoalArchiveServiceInput;
 import daiku.app.service.input.goal.GoalArchiveUpdateServiceInput;
-import daiku.domain.infra.enums.PublishLevel;
+import daiku.domain.enums.PublishLevel;
 import lombok.Builder;
 import lombok.Value;
 import org.springframework.format.annotation.DateTimeFormat;

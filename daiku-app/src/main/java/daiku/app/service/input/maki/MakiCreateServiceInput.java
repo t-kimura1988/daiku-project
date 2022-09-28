@@ -1,6 +1,6 @@
 package daiku.app.service.input.maki;
 
-import daiku.domain.infra.entity.TMakis;
+import daiku.domain.entity.TMakis;
 import lombok.Builder;
 import lombok.Value;
 

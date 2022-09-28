@@ -1,6 +1,6 @@
 package daiku.app.service.output.maki;
 
-import daiku.domain.infra.model.res.MakiAddGoalListModel;
+import daiku.domain.model.res.MakiAddGoalListModel;
 import lombok.Builder;
 import lombok.Value;
 

@@ -1,9 +1,9 @@
 package daiku.app.service.input.goal;
 
-import daiku.domain.infra.entity.TGoalArchive;
-import daiku.domain.infra.enums.PublishLevel;
-import daiku.domain.infra.enums.UpdatingFlg;
-import daiku.domain.infra.model.param.GoalArchiveDaoParam;
+import daiku.domain.entity.TGoalArchive;
+import daiku.domain.enums.PublishLevel;
+import daiku.domain.enums.UpdatingFlg;
+import daiku.domain.model.param.GoalArchiveDaoParam;
 import lombok.Builder;
 import lombok.Value;
 

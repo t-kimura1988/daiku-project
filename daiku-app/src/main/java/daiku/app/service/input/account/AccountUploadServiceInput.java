@@ -1,7 +1,7 @@
 package daiku.app.service.input.account;
 
-import daiku.domain.infra.entity.TAccounts;
-import daiku.domain.infra.enums.AccountImageType;
+import daiku.domain.entity.TAccounts;
+import daiku.domain.enums.AccountImageType;
 import lombok.Builder;
 import lombok.Value;
 

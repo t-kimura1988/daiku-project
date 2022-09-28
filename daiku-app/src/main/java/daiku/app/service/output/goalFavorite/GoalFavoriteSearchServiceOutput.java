@@ -1,6 +1,6 @@
 package daiku.app.service.output.goalFavorite;
 
-import daiku.domain.infra.model.res.GoalFavoriteSearchModel;
+import daiku.domain.model.res.GoalFavoriteSearchModel;
 import lombok.Builder;
 import lombok.Value;
 
