@@ -1,6 +1,6 @@
 package daiku.app.service.input.maki;
 
-import daiku.domain.infra.model.param.MakiDaoParam;
+import daiku.domain.model.param.MakiDaoParam;
 import lombok.Builder;
 import lombok.Value;
 

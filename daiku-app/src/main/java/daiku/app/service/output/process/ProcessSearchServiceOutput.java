@@ -1,6 +1,6 @@
 package daiku.app.service.output.process;
 
-import daiku.domain.infra.model.res.ProcessSearchModel;
+import daiku.domain.model.res.ProcessSearchModel;
 import lombok.Builder;
 import lombok.Value;
 

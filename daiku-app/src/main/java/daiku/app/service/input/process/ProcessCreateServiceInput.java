@@ -1,9 +1,9 @@
 package daiku.app.service.input.process;
 
-import daiku.domain.infra.entity.TProcesses;
-import daiku.domain.infra.entity.TProcessesHistory;
-import daiku.domain.infra.enums.ProcessPriority;
-import daiku.domain.infra.enums.ProcessStatus;
+import daiku.domain.entity.TProcesses;
+import daiku.domain.entity.TProcessesHistory;
+import daiku.domain.enums.ProcessPriority;
+import daiku.domain.enums.ProcessStatus;
 import lombok.Builder;
 import lombok.Value;
 

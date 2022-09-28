@@ -1,9 +1,9 @@
 package daiku.app.service;
 
-import daiku.domain.infra.entity.GoenUserDetails;
-import daiku.domain.infra.entity.TAccounts;
-import daiku.domain.infra.enums.DelFlg;
-import daiku.domain.infra.repository.AccountRepository;
+import daiku.domain.entity.GoenUserDetails;
+import daiku.domain.entity.TAccounts;
+import daiku.domain.enums.DelFlg;
+import daiku.domain.repository.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

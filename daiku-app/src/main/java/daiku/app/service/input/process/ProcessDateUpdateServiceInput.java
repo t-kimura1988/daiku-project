@@ -1,8 +1,8 @@
 package daiku.app.service.input.process;
 
-import daiku.domain.infra.entity.TProcessesHistory;
-import daiku.domain.infra.model.res.ProcessHistorySearchModel;
-import daiku.domain.infra.model.res.ProcessSearchModel;
+import daiku.domain.entity.TProcessesHistory;
+import daiku.domain.model.res.ProcessHistorySearchModel;
+import daiku.domain.model.res.ProcessSearchModel;
 import lombok.Builder;
 import lombok.Value;
 

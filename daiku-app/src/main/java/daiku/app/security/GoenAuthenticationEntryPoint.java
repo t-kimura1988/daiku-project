@@ -1,7 +1,7 @@
 package daiku.app.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import daiku.domain.infra.entity.ErrorResponse;
+import daiku.domain.entity.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -2,10 +2,10 @@ package daiku.app.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import daiku.app.service.GoenUserDetailsService;
-import daiku.domain.infra.entity.ErrorResponse;
-import daiku.domain.infra.entity.GoenUserDetails;
-import daiku.domain.infra.entity.TAccounts;
-import daiku.domain.infra.enums.AccountType;
+import daiku.domain.entity.ErrorResponse;
+import daiku.domain.entity.GoenUserDetails;
+import daiku.domain.entity.TAccounts;
+import daiku.domain.enums.AccountType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

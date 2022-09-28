@@ -1,6 +1,6 @@
 package daiku.app.controller;
 
-import daiku.domain.infra.repository.AccountRepository;
+import daiku.domain.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

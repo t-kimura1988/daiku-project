@@ -1,10 +1,10 @@
 package daiku.app.service.input.processHistory;
 
-import daiku.domain.infra.entity.TProcessesHistory;
-import daiku.domain.infra.enums.ProcessPriority;
-import daiku.domain.infra.enums.ProcessStatus;
-import daiku.domain.infra.model.param.ProcessDaoParam;
-import daiku.domain.infra.model.res.ProcessHistorySearchModel;
+import daiku.domain.entity.TProcessesHistory;
+import daiku.domain.enums.ProcessPriority;
+import daiku.domain.enums.ProcessStatus;
+import daiku.domain.model.param.ProcessDaoParam;
+import daiku.domain.model.res.ProcessHistorySearchModel;
 import lombok.Builder;
 import lombok.Value;
 

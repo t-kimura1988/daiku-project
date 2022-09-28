@@ -1,7 +1,7 @@
 package daiku.app.service.input.process;
 
-import daiku.domain.infra.model.param.GoalDaoParam;
-import daiku.domain.infra.model.param.ProcessDaoParam;
+import daiku.domain.model.param.GoalDaoParam;
+import daiku.domain.model.param.ProcessDaoParam;
 import lombok.Builder;
 import lombok.Value;
 

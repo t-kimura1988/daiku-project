@@ -1,8 +1,8 @@
 package daiku.app.controller.input.processHistory;
 
 import daiku.app.service.input.processHistory.ProcessHistoryUpdateStatusServiceInput;
-import daiku.domain.infra.enums.ProcessPriority;
-import daiku.domain.infra.enums.ProcessStatus;
+import daiku.domain.enums.ProcessPriority;
+import daiku.domain.enums.ProcessStatus;
 import lombok.Builder;
 import lombok.Value;
 

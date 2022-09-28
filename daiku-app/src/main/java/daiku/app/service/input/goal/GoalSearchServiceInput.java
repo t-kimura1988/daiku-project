@@ -1,6 +1,6 @@
 package daiku.app.service.input.goal;
 
-import daiku.domain.infra.model.param.GoalDaoParam;
+import daiku.domain.model.param.GoalDaoParam;
 import lombok.Builder;
 import lombok.Value;
 
