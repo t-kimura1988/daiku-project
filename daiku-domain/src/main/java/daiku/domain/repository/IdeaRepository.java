@@ -27,6 +27,10 @@ public class IdeaRepository {
         return ideaDao.select(param, SelectOptions.get(), toOptional());
     }
 
+    public Optional<TIdeas> detailForUpdate(IdeaDaoParam param) {
+        return ideaDao.selectForUpdate(param, SelectOptions.get(), toOptional());
+    }
+
     public void save(TIdeas ideas) {
         Optional.ofNullable(ideas.getId())
                 .ifPresentOrElse(

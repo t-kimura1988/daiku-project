@@ -2,6 +2,7 @@ package daiku.app.controller.input.idea;
 
 import daiku.app.controller.input.groups.UpdateGroups;
 import daiku.app.service.input.idea.IdeaCreateServiceInput;
+import daiku.app.service.input.idea.IdeaUpdateServiceInput;
 import lombok.Builder;
 import lombok.Value;
 
@@ -19,5 +20,12 @@ public class IdeaEditParameter {
         return IdeaCreateServiceInput.builder()
                 .body(body)
                 .accountId(accountId).build();
+    }
+
+    public IdeaUpdateServiceInput toUpdateService(Long accountId) {
+        return IdeaUpdateServiceInput.builder()
+                .ideaId(ideaId)
+                .accountId(accountId)
+                .body(body).build();
     }
 }

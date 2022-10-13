@@ -16,6 +16,9 @@ public interface IdeaDao {
     @Select(strategy = SelectType.COLLECT)
     <R> R select(IdeaDaoParam param, SelectOptions options, Collector<IdeaSearchModel, ?, R> collector);
 
+    @Select(strategy = SelectType.COLLECT)
+    <R> R selectForUpdate(IdeaDaoParam param, SelectOptions options, Collector<TIdeas, ?, R> collector);
+
     @Insert
     int insert(TIdeas ideas);
 

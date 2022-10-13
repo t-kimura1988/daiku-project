@@ -44,4 +44,11 @@ public class IdeaController {
         return ideaService.create(param.toService(user.account().getId())).toRes();
     }
 
+    @PostMapping(value = "/update")
+    public IdeaSearchModel update(
+            @RequestBody @Validated(CreateGroups.class) IdeaEditParameter param,
+            @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException{
+        return ideaService.update(param.toUpdateService(user.account().getId())).toRes();
+    }
+
 }

@@ -3,6 +3,7 @@ package daiku.app.service;
 import daiku.app.service.input.idea.IdeaCreateServiceInput;
 import daiku.app.service.input.idea.IdeaDetailServiceInput;
 import daiku.app.service.input.idea.IdeaMySearchServiceInput;
+import daiku.app.service.input.idea.IdeaUpdateServiceInput;
 import daiku.app.service.output.idea.IdeaCreateServiceOutput;
 import daiku.app.service.output.idea.IdeaDetailServiceOutput;
 import daiku.app.service.output.idea.IdeaMySearchServiceOutput;
@@ -57,8 +58,24 @@ public class IdeaService {
                 .build();
     }
 
-    public IdeaCreateServiceOutput update(IdeaCreateServiceInput input) throws GoenNotFoundException {
+    public IdeaCreateServiceOutput update(IdeaUpdateServiceInput input) throws GoenNotFoundException {
+        var idea = ideaRepository.detailForUpdate(IdeaDaoParam.builder()
+                .ideaId(input.getIdeaId())
+                .accountId(input.getAccountId()).build()).orElseThrow(() -> {
+            Map<String, String> param = new LinkedHashMap<>();
+            param.put("Ideas.id: ", input.getIdeaId().toString());
+            return new GoenNotFoundException("idea detail info no found", param);
+
+        });
+        idea.setBody(input.getBody());
+        ideaRepository.save(idea);
         return IdeaCreateServiceOutput.builder()
+                .ideaSearchModel(ideaRepository.detail(IdeaDaoParam.builder().ideaId(idea.getId()).build()).orElseThrow(
+                        () -> {
+                            Map<String, String> param = new LinkedHashMap<>();
+                            param.put("Ideas.id: ", idea.getId().toString());
+                            return new GoenNotFoundException("idea detail info no found", param);
+                        }))
                 .build();
     }
 }
