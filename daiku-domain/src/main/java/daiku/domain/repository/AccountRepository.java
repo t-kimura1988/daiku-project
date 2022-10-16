@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static daiku.domain.utils.CollectorUtil.toOptional;
 import static java.util.stream.Collectors.toList;
 
 @Repository
@@ -22,6 +23,10 @@ public class AccountRepository {
 
     public Optional<TAccounts> selectByUid(String uid) {
         return accountDao.selectByUid(uid);
+    }
+
+    public Optional<TAccounts> selectById(Long accountId){
+        return accountDao.select(AccountDaoParam.builder().id(accountId).build(), SelectOptions.get(), toOptional());
     }
 
     public List<TAccounts> selectOfDel() {

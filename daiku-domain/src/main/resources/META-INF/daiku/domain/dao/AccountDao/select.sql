@@ -3,9 +3,13 @@ select
 from
     t_accounts
 where
+/*%if param.id != null */
+  and
+    id = /* param.id */0
+/*%end*/
 /*%if param.uid != null */
   and
-    uid = /* param.uid */0
+    uid = /* param.uid */'0'
 /*%end*/
 /*%if param.delFlg != null */
   and
