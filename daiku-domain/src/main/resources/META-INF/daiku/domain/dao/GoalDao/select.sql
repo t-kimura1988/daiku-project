@@ -29,7 +29,7 @@ left join
 left join
         t_makis mk on mk.id = mgr.maki_id
 where
-/*%if param.olderThan */true
+/*%if param.olderThan */
     g.create_date < /* param.fromCreateDate */'2022-01-01'
 /*%end*/
 /*%if !param.olderThan && param.fromCreateDate != null && param.toCreateDate != null */

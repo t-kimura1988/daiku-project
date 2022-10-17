@@ -50,7 +50,13 @@ public class AccountService {
         return account;
     }
 
-    public TAccounts baseCreate(AccountCreateServiceInput input) throws FirebaseAuthException {
+    public TAccounts baseCreate(AccountCreateServiceInput input) throws FirebaseAuthException, GoenNotFoundException {
+        var account = accountRepository.selectByUid(input.getUid());
+        if (account.isPresent()) {
+            Map<String, String> param = new LinkedHashMap<>();
+            param.put("uid: ", input.getUid());
+            throw  new GoenNotFoundException("this uid is already existed t_account :", param);
+        }
         TAccounts accounts = new TAccounts();
         accounts.setUid(input.getUid());
         accounts.setEmail(input.getEmail());
@@ -65,6 +71,12 @@ public class AccountService {
     }
 
     public AccountUpdateServiceOutput update(AccountUpdateServiceInput input) throws GoenNotFoundException {
+        accountRepository.selectById(input.getAccountId()).orElseThrow(() -> {
+            Map<String, String> param = new LinkedHashMap<>();
+            param.put("id: ", input.getAccountId().toString());
+            return new GoenNotFoundException("account id is not found", param);
+
+        });
         accountRepository.save(input.toRepo());
         return AccountUpdateServiceOutput.builder()
                 .accounts(accountRepository.selectByUid(input.getUid()).orElseThrow(

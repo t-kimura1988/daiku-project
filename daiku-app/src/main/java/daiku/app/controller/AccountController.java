@@ -32,7 +32,7 @@ public class AccountController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public TAccounts create(
             @RequestBody @Validated AccountCreateParam param,
-            @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException {
+            @AuthenticationPrincipal GoenUserDetails userDetails) throws FirebaseAuthException, GoenNotFoundException {
         return accountService.baseCreate(param.toService(userDetails.account()));
     }
 
