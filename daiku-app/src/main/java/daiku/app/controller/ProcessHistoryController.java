@@ -4,6 +4,7 @@ import daiku.app.controller.input.processHistory.*;
 import daiku.app.service.ProcessHistoryService;
 import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.entity.GoenUserDetails;
+import daiku.domain.model.res.ProcessHistoryDuringProcessModel;
 import daiku.domain.model.res.ProcessHistorySearchModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,13 @@ public class ProcessHistoryController {
             @AuthenticationPrincipal GoenUserDetails user
     ) throws GoenNotFoundException {
         return processHistoryService.updateStatus(param.toService(user.account().getId()));
+    }
+
+    @GetMapping("/during-process/list")
+    public List<ProcessHistoryDuringProcessModel> scheduleList(
+            ProcessHistoryScheduleListParam param,
+            @AuthenticationPrincipal GoenUserDetails user
+    ) {
+        return processHistoryService.getScheduleList(param.toService(user.account().getId()));
     }
 }

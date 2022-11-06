@@ -3,9 +3,11 @@ package daiku.app.service;
 import daiku.app.service.input.processHistory.*;
 import daiku.app.service.output.processHistory.ProcessHistoryDetailServiceOutput;
 import daiku.app.service.output.processHistory.ProcessHistorySearchServiceOutput;
-import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.entity.TProcessesHistory;
+import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.model.param.ProcessHistoryDaoParam;
+import daiku.domain.model.param.ProcessHistoryDuringProcessParam;
+import daiku.domain.model.res.ProcessHistoryDuringProcessModel;
 import daiku.domain.model.res.ProcessHistorySearchModel;
 import daiku.domain.model.res.ProcessSearchModel;
 import daiku.domain.repository.ProcessHistoryRepository;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -148,5 +151,11 @@ public class ProcessHistoryService {
                     param.put("ProcessHistory.id: ", updateProcessesHistory.getId().toString());
                     return new GoenNotFoundException("process history detail info not found", param);
                 });
+    }
+
+    public List<ProcessHistoryDuringProcessModel> getScheduleList(ProcessHistoryScheduleListServiceInput input) {
+        return processHistoryRepository.selectDuringProcess(ProcessHistoryDuringProcessParam.builder()
+                .processHistoryDate(input.getProcessHistoryDate())
+                .accountId(input.getAccountId()).build());
     }
 }
