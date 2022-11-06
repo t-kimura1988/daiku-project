@@ -1,5 +1,8 @@
 package daiku.app.service;
 
+import com.google.auth.oauth2.AccessToken;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuthException;
 import daiku.app.DaikuApplication;
 import daiku.app.service.input.account.AccountCreateServiceInput;
@@ -13,8 +16,8 @@ import daiku.domain.exception.GoenIntegrityException;
 import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.repository.AccountRepository;
 import daiku.domain.repository.FirebaseRepository;
+import daiku.domain.utils.FirebaseClient;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -24,7 +27,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
+import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,6 +52,9 @@ public class AccountServiceTest {
 
     @SpyBean
     private FirebaseRepository firebaseRepository;
+
+    @SpyBean
+    private FirebaseClient firebaseClient;
 
     @Test
     @DisplayName("selectByUidでデータが取得できなかった場合")
@@ -120,9 +129,8 @@ public class AccountServiceTest {
 
     @Test
     @DisplayName("アカウント作成_正常")
-    @Disabled // FirebaseのMockがよくわからない
     void test6() throws GoenNotFoundException, FirebaseAuthException {
-        doNothing().when(firebaseRepository).accountClaims("aaaa");
+        doNothing().when(firebaseRepository).accountClaims(any());
         var res = accountService.baseCreate(AccountCreateServiceInput.builder()
                 .uid("new_uid_11111")
                 .familyName("test_family")
@@ -243,5 +251,20 @@ public class AccountServiceTest {
 
         assertEquals("user_image_before", res.getUserImage());
         assertEquals("back_image_after", res.getProfileBackImage());
+    }
+
+    private static FirebaseOptions getMockCredentialOptions() {
+        return FirebaseOptions.builder().setCredentials(new MockGoogleCredentials()).build();
+    }
+
+
+
+    private static class MockGoogleCredentials extends GoogleCredentials {
+
+        @Override
+        public AccessToken refreshAccessToken() {
+            Date expiry = new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1));
+            return new AccessToken(UUID.randomUUID().toString(), expiry);
+        }
     }
 }
