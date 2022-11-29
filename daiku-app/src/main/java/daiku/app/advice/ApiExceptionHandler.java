@@ -21,8 +21,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(GoenNotFoundException.class)
     public ResponseEntity<Object> handleGoenNotFoundException(GoenNotFoundException e, WebRequest request) {
-        log.error("not found!!! EXCEPTION IS:" + e.toString());
+        log.error("not found!!! EXCEPTION IS: " + e.toString());
         log.error("ERROR MESSAGE=" + e.getMessage());
+        if(e.getDetail() != null) {
+            log.error("ERROR DATA=" + e.getDetail().toString());
+        }
         return super.handleExceptionInternal(
                 e,
                 ErrorResponse.builder()

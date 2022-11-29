@@ -36,7 +36,7 @@ public class ProcessHistoryService {
         ProcessSearchModel detail = processRepository.detail(input.toProcessDetailParam())
                 .orElseThrow(() -> {
                     Map<String, String> param = new LinkedHashMap<>();
-                    param.put("Process.id: ", input.getProcessId().toString());
+                    param.put("Process.id", input.getProcessId().toString());
                     return new GoenNotFoundException("process detail info no found", param);
                 });
 
@@ -53,7 +53,7 @@ public class ProcessHistoryService {
                         processHistoryRepository.detail(input.toProcessDetailParam()).orElseThrow(
                                 () -> {
                                     Map<String, String> param = new LinkedHashMap<>();
-                                    param.put("ProcessHistory.id: ", input.getProcessHistoryId().toString());
+                                    param.put("ProcessHistory.id", input.getProcessHistoryId().toString());
                                     return new GoenNotFoundException("process history detail info not found", param);
                                 }
                         )
