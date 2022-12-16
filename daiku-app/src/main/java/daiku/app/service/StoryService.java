@@ -2,8 +2,10 @@ package daiku.app.service;
 
 import daiku.app.service.input.story.StoryBodyUpdateServiceInput;
 import daiku.app.service.input.story.StoryCreateServiceInput;
+import daiku.app.service.input.story.StoryDetailServiceInput;
 import daiku.app.service.output.story.StoryBodyUpdateServiceOutput;
 import daiku.app.service.output.story.StoryCreateServiceOutput;
+import daiku.app.service.output.story.StoryDetailServiceOutput;
 import daiku.domain.entity.TStories;
 import daiku.domain.exception.GoenNotFoundException;
 import daiku.domain.model.param.IdeaDaoParam;
@@ -27,6 +29,23 @@ public class StoryService {
 
     @Autowired
     IdeaRepository ideaRepository;
+
+    public StoryDetailServiceOutput detail(StoryDetailServiceInput input) throws GoenNotFoundException {
+
+        ideaRepository.detail(IdeaDaoParam.builder().ideaId(input.getIdeaId()).build()).orElseThrow(() -> {
+            Map<String, String> param = new LinkedHashMap<>();
+            param.put("Ideas.id: ", input.getIdeaId().toString());
+            return new GoenNotFoundException("idea is not found", param);
+        });
+
+        return StoryDetailServiceOutput.builder()
+                .storySearchModel(storyRepository.detail(input.toDaoParam()).orElseThrow(() -> {
+                    Map<String, String> param = new LinkedHashMap<>();
+                    param.put("Story.id: ", input.getStoryId().toString());
+                    return new GoenNotFoundException("story is not found", param);
+                }))
+                .build();
+    }
 
     public StoryCreateServiceOutput create(StoryCreateServiceInput input) throws GoenNotFoundException{
         ideaRepository.detail(IdeaDaoParam.builder().ideaId(input.getIdeaId()).build()).orElseThrow(() -> {
