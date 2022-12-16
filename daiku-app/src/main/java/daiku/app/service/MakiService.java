@@ -93,7 +93,7 @@ public class MakiService {
                 () -> {
                     Map<String, String> param = new LinkedHashMap<>();
                     param.put("Maki.id: ", input.getMakiId().toString());
-                    return new GoenNotFoundException("maki detail info no found", param);
+                    return new GoenNotFoundException("maki detail info no found", param, "E0007");
                 }
         );
 
@@ -113,6 +113,9 @@ public class MakiService {
         AtomicReference<Long> num = new AtomicReference<>(1L);
         input.getBody().stream().forEach(item -> {
             try {
+                if (item.getGoalId() == 0 || item.getGoalCreateDate() == null || item.getMakiId() == 0) {
+                    return;
+                }
                 Long maxNum = makiGoalRepository.makiGoalRelationSortNumMax(item.getMakiId());
                 Long addNum = 0L;
                 if(maxNum == null) {
@@ -129,8 +132,7 @@ public class MakiService {
                 });
                 var isPresent = makiGoalRepository.makiGoalOptional(MakiGoalDaoParam.builder()
                         .goalId(item.getGoalId())
-                        .goalCreateDate(item.getGoalCreateDate())
-                        .makiId(item.getMakiId()).build())
+                        .goalCreateDate(item.getGoalCreateDate()).build())
                         .isPresent();
 
                 if (isPresent) {
