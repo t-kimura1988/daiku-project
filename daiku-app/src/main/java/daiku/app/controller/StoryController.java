@@ -2,6 +2,7 @@ package daiku.app.controller;
 
 import daiku.app.controller.input.groups.CreateGroups;
 import daiku.app.controller.input.story.StoryBodyUpdateParameter;
+import daiku.app.controller.input.story.StoryDetailParameter;
 import daiku.app.controller.input.story.StoryEditParameter;
 import daiku.app.service.StoryService;
 import daiku.domain.entity.GoenUserDetails;
@@ -12,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -24,6 +22,13 @@ public class StoryController {
 
     @Autowired
     private StoryService storyService;
+
+    @GetMapping(value = "/detail")
+    public StorySearchModel detail(
+            StoryDetailParameter param,
+            @AuthenticationPrincipal GoenUserDetails user) throws GoenNotFoundException{
+        return storyService.detail(param.toService(user.account().getId())).toRes();
+    }
 
     @PostMapping(value = "/create")
     public StorySearchModel create(
